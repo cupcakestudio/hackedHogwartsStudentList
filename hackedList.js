@@ -22,21 +22,23 @@ function loadJSON() {
       // when loaded, prepare objects
       prepareObjects(jsonData);
       filterButton.addEventListener("click", () => {
+        //filter all students into correct lists based on filter and display the array
         if (filterActive.value === "1") {
-          filterGryffindor(allStudents);
+          displayList(allStudents.filter(filterGryffindor));
         }
         if (filterActive.value === "2") {
-          filterSlytherin(allStudents);
+          console.log(allStudents.filter(filterSlytherin));
         }
         if (filterActive.value === "3") {
-          filterHufflepuff(allStudents);
+          console.log(allStudents.filter(filterHufflepuff));
         }
         if (filterActive.value === "4") {
-          filterRavenclaw(allStudents);
+          console.log(allStudents.filter(filterRavenclaw));
         }
       });
     });
 }
+
 function prepareObjects(jsonData) {
   console.log(jsonData);
   jsonData.forEach((jsonObject) => {
@@ -165,32 +167,45 @@ function prepareObjects(jsonData) {
   console.table(allStudents);
 }
 
-//filter allStudents list into new housesList
+//filter one student after it's house
 
-function filterGryffindor(allStudents) {
+function filterGryffindor(student) {
   //got the code line inspired by mdn filter by search query
   //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
-  const gryffindorStudentsList = allStudents.filter((student) =>
-    student.house.includes("Gryffindor")
-  );
-  console.log(gryffindorStudentsList);
+  // const gryffindorStudentsList = allStudents.filter((student) =>
+  //   student.house.includes("Gryffindor")
+  // );
+  if (student.house === "Gryffindor") {
+    return true;
+  }
+  return false;
 }
 
-function filterSlytherin(allStudents) {
-  const slytherinStudentsList = allStudents.filter((student) =>
-    student.house.includes("Slytherin")
-  );
-  console.log(slytherinStudentsList);
+function filterSlytherin(student) {
+  // const slytherinStudentsList = allStudents.filter((student) =>
+  //   student.house.includes("Slytherin")
+  // );
+  if (student.house === "Slytherin") {
+    return true;
+  }
+  return false;
 }
-function filterHufflepuff(allStudents) {
-  const hufflepuffStudentsList = allStudents.filter((student) =>
-    student.house.includes("Hufflepuff")
-  );
-  console.log(hufflepuffStudentsList);
+
+function filterHufflepuff(student) {
+  // const hufflepuffStudentsList = allStudents.filter((student) =>
+  //   student.house.includes("Hufflepuff")
+  // );
+  if (student.house === "Hufflepuff") {
+    return true;
+  }
+  return false;
 }
-function filterRavenclaw(allStudents) {
-  const ravenclawStudentsList = allStudents.filter((student) =>
-    student.house.includes("Ravenclaw")
-  );
-  console.log(ravenclawStudentsList);
+function filterRavenclaw(student) {
+  // const ravenclawStudentsList = allStudents.filter((student) =>
+  //   student.house.includes("Ravenclaw")
+  // );
+  if (student.house === "Ravenclaw") {
+    return true;
+  }
+  return false;
 }
