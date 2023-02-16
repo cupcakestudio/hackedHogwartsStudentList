@@ -1,0 +1,101 @@
+body {
+  background-color: var(--Dark-Night-Sky-Clouds);
+}
+
+/*TITEL STYLING*/
+header {
+display: flex;
+flex-direction: row;
+justify-content: center;
+background-color: var(--paper);
+}
+h1 {display: flex;
+  flex-direction: row;
+  justify-content: center;}
+
+.buttons_and_dropdown{
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  justify-content: center;
+  margin-top: 2vh;
+}
+.info_list {
+  display: flex;
+  justify-content: center ;
+  margin-top: 2vh;
+  color: #FF00FF;
+}
+.main_list {
+display: grid;
+grid-template-columns: repeat(4,1fr);
+max-height: 100vh;
+column-gap: 10px;
+margin: 0px 10px 0px 10px;
+}
+.main_list > div{
+  margin-top: 20px;
+  border: 5px solid black;
+  height: 70vh;
+  background-color: var(--paper);
+  }
+
+#GhouseCrest, #GhouseCrest p{
+  background-color: var(--gryfRed);
+  border-color: var(--gryfGold);
+  color: whitesmoke;
+}
+#ShouseCrest, #ShouseCrest p{
+  background-color: var(--slytGreen);
+  border-color: var(--slytSilver);
+  color: whitesmoke;
+}
+#HhouseCrest, #HhouseCrest p{
+  background-color: var(--huffYellow);
+  border-color: var(--huffBlack);
+  color: whitesmoke;
+}
+#RhouseCrest, #RhouseCrest p{
+  background-color: var(--raveBlue);
+  border-color: var(--raveBronze);
+  color: whitesmoke;
+}
+ p {
+  font-family: cursive;
+}
+div > p {
+  display: flex;
+  justify-content: center ;
+}  
+
+ /*DETAILS*/
+ .details {
+  display: none;
+  position: fixed;
+  width: 50vw;
+  height: 50vh;
+  top: 0vh;
+  left: 50vh;
+  /* change background color acc. to student's house */
+  background-color: var(--paper);
+}
+ 
+/*COLORS*
+/* Color Theme Swatches in Hex */
+:root {
+--Dark-Night-Sky-Clouds:   #0f244d; 
+--paper: blanchedalmond;
+/* gryffindor color and accents */
+--gryfRed: #ff2400;
+--gryfGold: #FFD700;
+/* slytherin color and accents */
+--slytGreen: #118111;
+--slytSilver: #c0c0c0;
+/* hufflepuff color and accents */
+--huffYellow: #e1ad01;
+--huffBlack: #000000; 
+/* ravenclaw color and accents */
+--raveBlue: #4169e1;
+--raveBronze: #CD7F32;
+}
+

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hacked Hogwarts Student List</title>
+    <link rel="stylesheet" href="hogwartsStyle.css" />
+  </head>
+  <body>
+    <header><h1>Hogwarts Student List</h1></header>
+    <div class="info_list">Total of Students:</div>
+    <nav class="buttons_and_dropdown">
+      <select id="filtering">
+        <option value="0">Write query here</option>
+        <option value="1">House: Gryffindor</option>
+        <option value="2">House: Slythering</option>
+        <option value="3">House: Hufflepuff</option>
+        <option value="4">House: Ravenclaw</option>
+        <option value="5">Prefects</option>
+        <option value="6">Inquisitor Squad</option>
+      </select>
+
+      <label><button id="filter">Filter</button></label>
+
+      <input type="text" /> <label><button id="sort">Sort</button></label>
+      <input type="search" placeholder="Search query here" />
+      <label><button id="search">Search</button></label>
+    </nav>
+
+    <main class="main_list">
+      <!-- house crests -->
+      <div id="GhouseCrest">
+        <img />
+        <p>Courageous, brave and determination</p>
+      </div>
+      <div id="ShouseCrest">
+        <img />
+        <p>Cunning, resourceful and ambitious</p>
+      </div>
+      <div id="HhouseCrest">
+        <img />
+        <p>Hardworking, loyal and trustworthy</p>
+      </div>
+      <div id="RhouseCrest">
+        <img />
+        <p>Witty, creative and eccentric</p>
+      </div>
+    </main>
+    <!-- different lists -->
+    <template class="houseStudentList">
+      <div>
+        <div class="Gstudentlists"><h2></h2></div>
+        <div class="Sstudentlists"><h2></h2></div>
+        <div class="Hstudentlists"><h2></h2></div>
+        <div class="Rstudentlists"><h2></h2></div>
+      </div>
+    </template>
+    <section class="details">
+      <button id="luk">X</button>
+      <li class="name"></li>
+      <li class="movie"></li>
+    </section>
+    <footer></footer>
+  </body>
+  <script src="hackedList.js"></script>
+</html>
