@@ -12,15 +12,29 @@ const allStudents = [];
 window.addEventListener("DOMContentLoaded", start);
 function start() {
   console.log("ready");
-
   loadJSON();
 }
+
 function loadJSON() {
   fetch("https://petlatkea.dk/2021/hogwarts/students.json")
     .then((response) => response.json())
     .then((jsonData) => {
       // when loaded, prepare objects
       prepareObjects(jsonData);
+      filterButton.addEventListener("click", () => {
+        if (filterActive.value === "1") {
+          filterGryffindor(allStudents);
+        }
+        if (filterActive.value === "2") {
+          filterSlytherin(allStudents);
+        }
+        if (filterActive.value === "3") {
+          filterHufflepuff(allStudents);
+        }
+        if (filterActive.value === "4") {
+          filterRavenclaw(allStudents);
+        }
+      });
     });
 }
 function prepareObjects(jsonData) {
@@ -149,4 +163,34 @@ function prepareObjects(jsonData) {
   });
   //make array to a table
   console.table(allStudents);
+}
+
+//filter allStudents list into new housesList
+
+function filterGryffindor(allStudents) {
+  //got the code line inspired by mdn filter by search query
+  //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+  const gryffindorStudentsList = allStudents.filter((student) =>
+    student.house.includes("Gryffindor")
+  );
+  console.log(gryffindorStudentsList);
+}
+
+function filterSlytherin(allStudents) {
+  const slytherinStudentsList = allStudents.filter((student) =>
+    student.house.includes("Slytherin")
+  );
+  console.log(slytherinStudentsList);
+}
+function filterHufflepuff(allStudents) {
+  const hufflepuffStudentsList = allStudents.filter((student) =>
+    student.house.includes("Hufflepuff")
+  );
+  console.log(hufflepuffStudentsList);
+}
+function filterRavenclaw(allStudents) {
+  const ravenclawStudentsList = allStudents.filter((student) =>
+    student.house.includes("Ravenclaw")
+  );
+  console.log(ravenclawStudentsList);
 }
