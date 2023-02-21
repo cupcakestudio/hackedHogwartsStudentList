@@ -7,9 +7,26 @@ const Student = {
   nickName: "null",
   house: "",
 };
+//filter dropdown menu
+const filterActive = document.querySelector("#filtering");
+//filter button
+const filterButton = document.querySelector("#filter");
+const sortButton = document.querySelector("#sort");
 
+//all List arrays
 const allStudents = [];
+
+// global var
+// let template = document.querySelector(".FilteredStudentList");
+let template = document.querySelector("#ListDisplay .FilteredStudentList");
+//houses
+let gryffindorStudentsList;
+let slytherinStudentsList;
+let hufflepuffStudentsList;
+let ravenclawStudentsList;
+
 window.addEventListener("DOMContentLoaded", start);
+
 function start() {
   console.log("ready");
   loadJSON();
@@ -21,24 +38,31 @@ function loadJSON() {
     .then((jsonData) => {
       // when loaded, prepare objects
       prepareObjects(jsonData);
-      filterButton.addEventListener("click", () => {
-        //filter all students into correct lists based on filter and display the array
-        if (filterActive.value === "1") {
-          displayList(allStudents.filter(filterGryffindor));
-        }
-        if (filterActive.value === "2") {
-          console.log(allStudents.filter(filterSlytherin));
-        }
-        if (filterActive.value === "3") {
-          console.log(allStudents.filter(filterHufflepuff));
-        }
-        if (filterActive.value === "4") {
-          console.log(allStudents.filter(filterRavenclaw));
-        }
-      });
     });
 }
+document.addEventListener("DOMContentLoaded", filterButtonActive);
 
+function filterButtonActive() {
+  //add eventlistener for when a filter has been changed
+  filterButton.addEventListener("click", () => {
+    //filter all students into correct lists based on filter and display the array
+    if (filterActive.value === "Gryffindor") {
+      gryffindorStudentsList = allStudents.filter(filterGryffindor);
+      displayListwithFilter(gryffindorStudentsList);
+      // sortButton.addEventListener("click", selectSort());
+    }
+    if (filterActive.value === "Slytherin") {
+      slytherinStudentsList = allStudents.filter(filterSlytherin);
+      displayListwithFilter(slytherinStudentsList);
+    }
+    if (filterActive.value === "Hufflepuff") {
+      console.log(allStudents.filter(filterHufflepuff));
+    }
+    if (filterActive.value === "Ravenclaw") {
+      console.log(allStudents.filter(filterRavenclaw));
+    }
+  });
+}
 function prepareObjects(jsonData) {
   console.log(jsonData);
   jsonData.forEach((jsonObject) => {
@@ -165,6 +189,7 @@ function prepareObjects(jsonData) {
   });
   //make array to a table
   console.table(allStudents);
+  return allStudents.student;
 }
 
 //filter one student after it's house
@@ -179,6 +204,8 @@ function filterGryffindor(student) {
     return true;
   }
   return false;
+  // console.log(gryffindorStudentsList);
+  // return gryffindorStudentsList;
 }
 
 function filterSlytherin(student) {
@@ -190,7 +217,6 @@ function filterSlytherin(student) {
   }
   return false;
 }
-
 function filterHufflepuff(student) {
   // const hufflepuffStudentsList = allStudents.filter((student) =>
   //   student.house.includes("Hufflepuff")
@@ -209,3 +235,57 @@ function filterRavenclaw(student) {
   }
   return false;
 }
+//
+//DISPLAY STUDENTS
+function displayListwithFilter(list) {
+  document.querySelector("h2").textContent = "Gryffindor";
+  displayStudentList(list);
+
+  console.log(gryffindorStudentsList);
+}
+
+//TODO: DISPLAY STUDENTS
+function displayStudentList(list) {
+  //styling the list view - hide all the 'banner housecrest' lists - not pretily removed :)
+  document.querySelector("#GhouseCrest").classList.add("hide");
+  document.querySelector("#ShouseCrest").classList.add("hide");
+  document.querySelector("#HhouseCrest").classList.add("hide");
+  document.querySelector("#RhouseCrest").classList.add("hide");
+
+  document.querySelector(".main_list").classList.add("studentList");
+
+  //var stored of the filtered array List
+  let StudentListToDisplay = list;
+
+  //get h2 house name to get display
+  let listToDisplay = document.querySelector("#ListDisplay");
+  // listToDisplay.querySelector("h2").textContent = student.house;
+  // get list name from filtervalue and make sure that #ListDisplay keeps div and headline and p tag before template tag's students get inserted
+  listToDisplay.innerHTML = `<h2>${filterActive.value}</h2>
+  <p class="StudentHeadline">Students:</p>`;
+  //clear displayList each time it studentListToDisplay gets run w/ filter (and or sort.)
+  StudentListToDisplay.forEach((studentListed) => {
+    //each student in the listDisplay Node
+    let studentListClone = template.content.cloneNode(true);
+    //set name to each student Node
+    studentListClone.querySelector(
+      "p"
+    ).textContent = `${studentListed.firstName}`;
+    //append the student name to the listDisplay Container
+    listToDisplay.appendChild(studentListClone);
+  });
+  //append template student list to display in main_list container.
+  document.querySelector(".main_list").appendChild(listToDisplay);
+}
+
+//SORT THE STUDENTS
+//selected sort value
+// function selectSort(event) {
+//   const sortBy = event.target.value;
+//   console.log(sortBy);
+// }
+// function sortList(list) {
+//   if (studentA.firstname > studentB.firstname) {
+//     return console.log();
+//   }
+// }
