@@ -9,16 +9,37 @@ const Student = {
   house: "",
 };
 
-const settings = {
-  filter: "0",
-  sortBy: "name",
-  sortDirection: "asc",
-};
+// const settings = {
+//   filter: "0",
+//   sortBy: "name",
+//   sortDirection: "asc",
+// };
+
 //filter dropdown menu
 const filterActive = document.querySelector("#filtering");
 //filter button
 const filterButton = document.querySelector("#filter");
+//sorting dropdown menu and button var
+const sortingActive = document.querySelector("#sorting");
 const sortButton = document.querySelector("#sort");
+
+//get field value for filter and sort
+function getFilterandSortValues() {
+  return allStudents
+    .filter((s) => s.house === filterActive.value)
+    .sort((s1, s2) => {
+      //expr in switch statement is the thing i want to check
+      switch (sortingActive.value) {
+        //expr in case statement is the string i want to check against.
+        case "Firstname":
+          return s1.firstName.localeCompare(s2.firstName);
+        case "Lastname":
+          return s1.lastName.localeCompare(s2.lastName);
+        default:
+          0;
+      }
+    });
+}
 
 //all List arrays
 const allStudents = [];
@@ -27,10 +48,8 @@ const allStudents = [];
 // let template = document.querySelector(".FilteredStudentList");
 let template = document.querySelector("#ListDisplay .FilteredStudentList");
 //houses
-let gryffindorStudentsList;
-let slytherinStudentsList;
-let hufflepuffStudentsList;
-let ravenclawStudentsList;
+let filteredStudentsList;
+
 //generic filter
 let filterBy = "0";
 
@@ -50,41 +69,35 @@ async function loadJSON() {
     });
 }
 document.addEventListener("DOMContentLoaded", filterButtonActive);
-document.addEventListener("DOMContentLoaded", sortButtonActive);
+// document.addEventListener("DOMContentLoaded", selectSort);
 
 //function to listen after filter button has been clicked
 function filterButtonActive() {
   //add eventlistener for when a filter has been changed
-  filterButton.addEventListener("click", () => {
-    //filter all students into correct lists based on filter and display the array
-    if (filterActive.value === "Gryffindor") {
-      gryffindorStudentsList = allStudents.filter(filterGryffindor);
-      displayList(gryffindorStudentsList);
-      // sortButton.addEventListener("click", selectSort());
-    }
-    if (filterActive.value === "Slytherin") {
-      slytherinStudentsList = allStudents.filter(filterSlytherin);
-      displayList(slytherinStudentsList);
-    }
-    if (filterActive.value === "Hufflepuff") {
-      hufflepuffStudentsList = allStudents.filter(filterHufflepuff);
-      displayList(hufflepuffStudentsList);
-    }
-    if (filterActive.value === "Ravenclaw") {
-      ravenclawStudentsList = allStudents.filter(filterRavenclaw);
-      displayList(ravenclawStudentsList);
-    }
-  });
+  filterButton.addEventListener("click", () =>
+    displayList(getFilterandSortValues())
+  );
+}
+sortButton.addEventListener("click", () =>
+  displayList(getFilterandSortValues())
+);
+//function to listen after sort button has been clicked
+
+function selectSort() {
+  const sortBy = sortingActive.value;
+  console.log(sortBy);
+
+  const sortedList = filteredStudentsList.sort((a, b) =>
+    a.firstName.localeCompare(b.firstName)
+  );
+  console.log(filteredStudentsList);
+  displayList(sortedList);
 }
 
-//function to listen after sort button has been clicked
-function sortButtonActive() {
-  sortButton.addEventListener("click", selectSort(this.value));
-}
-function selectSort(value) {
-  const sortBy = value;
-  console.log(sortBy);
-}
+//SORTING??
+// function sortList(){
+//   const currentList =
+// }
 
 function prepareObjects(jsonData) {
   console.log(jsonData);
@@ -222,7 +235,7 @@ function prepareObjects(jsonData) {
 
 //filter one student after it's house
 
-function filterGryffindor(student) {
+function isGryffindor(student) {
   //got the code line inspired by mdn filter by search query
   //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
   // const gryffindorStudentsList = allStudents.filter((student) =>
@@ -236,7 +249,7 @@ function filterGryffindor(student) {
   // return gryffindorStudentsList;
 }
 
-function filterSlytherin(student) {
+function isSlytherin(student) {
   // const slytherinStudentsList = allStudents.filter((student) =>
   //   student.house.includes("Slytherin")
   // );
@@ -245,7 +258,7 @@ function filterSlytherin(student) {
   }
   return false;
 }
-function filterHufflepuff(student) {
+function isHufflepuff(student) {
   // const hufflepuffStudentsList = allStudents.filter((student) =>
   //   student.house.includes("Hufflepuff")
   // );
@@ -254,7 +267,7 @@ function filterHufflepuff(student) {
   }
   return false;
 }
-function filterRavenclaw(student) {
+function isRavenclaw(student) {
   // const ravenclawStudentsList = allStudents.filter((student) =>
   //   student.house.includes("Ravenclaw")
   // );
@@ -266,7 +279,7 @@ function filterRavenclaw(student) {
 //
 //DISPLAY STUDENTS
 function displayList(list) {
-  document.querySelector("h2").textContent = "Gryffindor";
+  document.querySelector("h2").textContent = "";
   displayStudentList(list);
   console.log(list);
 }
@@ -327,21 +340,10 @@ function displayStudentList(list) {
     //append the student name to the listDisplay Container
     listToDisplay.appendChild(studentListClone);
   });
+  //interface display of information about the lists
+  document.querySelector(
+    ".info_list"
+  ).textContent = ` Total of Students: ${StudentListToDisplay.length}`;
   //append template student list to display in main_list container.
   return document.querySelector(".main_list").appendChild(listToDisplay);
 }
-
-//in order to build the view
-// buildList()
-
-//SORT THE STUDENTS
-//selected sort value
-// function selectSort(event) {
-//   const sortBy = event.target.value;
-//   console.log(sortBy);
-// }
-// function sortList(list) {
-//   if (studentA.firstname > studentB.firstname) {
-//     return console.log();
-//   }
-// }
