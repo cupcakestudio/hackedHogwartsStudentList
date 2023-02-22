@@ -17,16 +17,26 @@ const Student = {
 
 //filter dropdown menu
 const filterActive = document.querySelector("#filtering");
-//filter button
-const filterButton = document.querySelector("#filter");
-//sorting dropdown menu and button var
+
+//sorting dropdown menu  var
 const sortingActive = document.querySelector("#sorting");
-const sortButton = document.querySelector("#sort");
+//search field
+const searchValue = document.querySelector("#search");
 
 //get field value for filter and sort
-function getFilterandSortValues() {
+//sort on cases which corresponds to sort field value using localeCompare();
+//return that to the filter function in order to filter allStudents array correctly, based on filter field value.
+function getFilterSortSearchValues() {
   return allStudents
-    .filter((s) => s.house === filterActive.value)
+    .filter(
+      (s) =>
+        (s.house === filterActive.value ||
+          (s.prefect && filterActive.value === "Prefects") ||
+          (s.squad && filterActive.value === "Inquisitor Squad") ||
+          (s.expelled && filterActive.value === "Expelled")) &&
+        //searching across searchValue and compare to the students names
+        (s.firstName + " " + s.lastName).includes(searchValue.value)
+    )
     .sort((s1, s2) => {
       //expr in switch statement is the thing i want to check
       switch (sortingActive.value) {
@@ -68,35 +78,36 @@ async function loadJSON() {
       prepareObjects(jsonData);
     });
 }
-document.addEventListener("DOMContentLoaded", filterButtonActive);
+
 // document.addEventListener("DOMContentLoaded", selectSort);
 
-//function to listen after filter button has been clicked
-function filterButtonActive() {
-  //add eventlistener for when a filter has been changed
-  filterButton.addEventListener("click", () =>
-    displayList(getFilterandSortValues())
-  );
-}
-sortButton.addEventListener("click", () =>
-  displayList(getFilterandSortValues())
+//Eventlistener for FILTERING dropdown menu activate
+
+//add eventlistener for when a filter has been changed
+filterActive.addEventListener("change", () =>
+  displayList(getFilterSortSearchValues())
 );
+
+//Eventlistener for SORTING dropdown menu activate
+sortingActive.addEventListener("change", () =>
+  displayList(getFilterSortSearchValues())
+);
+
+searchValue.addEventListener("input", () =>
+  displayList(getFilterSortSearchValues())
+);
+
 //function to listen after sort button has been clicked
 
-function selectSort() {
-  const sortBy = sortingActive.value;
-  console.log(sortBy);
+// function selectSort() {
+//   const sortBy = sortingActive.value;
+//   console.log(sortBy);
 
-  const sortedList = filteredStudentsList.sort((a, b) =>
-    a.firstName.localeCompare(b.firstName)
-  );
-  console.log(filteredStudentsList);
-  displayList(sortedList);
-}
-
-//SORTING??
-// function sortList(){
-//   const currentList =
+//   const sortedList = filteredStudentsList.sort((a, b) =>
+//     a.firstName.localeCompare(b.firstName)
+//   );
+//   console.log(filteredStudentsList);
+//   displayList(sortedList);
 // }
 
 function prepareObjects(jsonData) {
@@ -233,49 +244,6 @@ function prepareObjects(jsonData) {
   return allStudents.student;
 }
 
-//filter one student after it's house
-
-function isGryffindor(student) {
-  //got the code line inspired by mdn filter by search query
-  //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
-  // const gryffindorStudentsList = allStudents.filter((student) =>
-  //   student.house.includes("Gryffindor")
-  // );
-  if (student.house === "Gryffindor") {
-    return true;
-  }
-  return false;
-  // console.log(gryffindorStudentsList);
-  // return gryffindorStudentsList;
-}
-
-function isSlytherin(student) {
-  // const slytherinStudentsList = allStudents.filter((student) =>
-  //   student.house.includes("Slytherin")
-  // );
-  if (student.house === "Slytherin") {
-    return true;
-  }
-  return false;
-}
-function isHufflepuff(student) {
-  // const hufflepuffStudentsList = allStudents.filter((student) =>
-  //   student.house.includes("Hufflepuff")
-  // );
-  if (student.house === "Hufflepuff") {
-    return true;
-  }
-  return false;
-}
-function isRavenclaw(student) {
-  // const ravenclawStudentsList = allStudents.filter((student) =>
-  //   student.house.includes("Ravenclaw")
-  // );
-  if (student.house === "Ravenclaw") {
-    return true;
-  }
-  return false;
-}
 //
 //DISPLAY STUDENTS
 function displayList(list) {
@@ -337,9 +305,11 @@ function displayStudentList(list) {
         "p"
       ).textContent = `${studentListed.firstName} ${studentListed.middleName} ${studentListed.lastName}`;
     }
+    studentListClone.querySelector("p").addEventListener("click", detailsPopop);
     //append the student name to the listDisplay Container
     listToDisplay.appendChild(studentListClone);
   });
+
   //interface display of information about the lists
   document.querySelector(
     ".info_list"
@@ -347,3 +317,70 @@ function displayStudentList(list) {
   //append template student list to display in main_list container.
   return document.querySelector(".main_list").appendChild(listToDisplay);
 }
+//DETAILS POPOP
+function detailsPopop() {
+  console.log("i have beenclicked");
+}
+
+//in order to build the view
+// buildList()
+
+//SORT THE STUDENTS
+//selected sort value
+// function selectSort(event) {
+//   const sortBy = event.target.value;
+//   console.log(sortBy);
+// }
+// function sortList(list) {
+//   if (studentA.firstname > studentB.firstname) {
+//     return console.log();
+//   }
+// }
+
+//SORTING??
+// function sortList(){
+//   const currentList =
+// }
+// //filter one student after it's house
+
+// function isGryffindor(student) {
+//   //got the code line inspired by mdn filter by search query
+//   //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+//   // const gryffindorStudentsList = allStudents.filter((student) =>
+//   //   student.house.includes("Gryffindor")
+//   // );
+//   if (student.house === "Gryffindor") {
+//     return true;
+//   }
+//   return false;
+//   // console.log(gryffindorStudentsList);
+//   // return gryffindorStudentsList;
+// }
+
+// function isSlytherin(student) {
+//   // const slytherinStudentsList = allStudents.filter((student) =>
+//   //   student.house.includes("Slytherin")
+//   // );
+//   if (student.house === "Slytherin") {
+//     return true;
+//   }
+//   return false;
+// }
+// function isHufflepuff(student) {
+//   // const hufflepuffStudentsList = allStudents.filter((student) =>
+//   //   student.house.includes("Hufflepuff")
+//   // );
+//   if (student.house === "Hufflepuff") {
+//     return true;
+//   }
+//   return false;
+// }
+// function isRavenclaw(student) {
+//   // const ravenclawStudentsList = allStudents.filter((student) =>
+//   //   student.house.includes("Ravenclaw")
+//   // );
+//   if (student.house === "Ravenclaw") {
+//     return true;
+//   }
+//   return false;
+// }
