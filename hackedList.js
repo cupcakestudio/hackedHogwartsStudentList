@@ -1,11 +1,18 @@
 /*CLEAN DATA V1*/
 "use strict";
+//OBJECTS
 const Student = {
   firstName: "",
   lastName: "",
   middleName: "undefined",
   nickName: "null",
   house: "",
+};
+
+const settings = {
+  filter: "0",
+  sortBy: "name",
+  sortDirection: "asc",
 };
 //filter dropdown menu
 const filterActive = document.querySelector("#filtering");
@@ -24,6 +31,8 @@ let gryffindorStudentsList;
 let slytherinStudentsList;
 let hufflepuffStudentsList;
 let ravenclawStudentsList;
+//generic filter
+let filterBy = "0";
 
 window.addEventListener("DOMContentLoaded", start);
 
@@ -32,7 +41,7 @@ function start() {
   loadJSON();
 }
 
-function loadJSON() {
+async function loadJSON() {
   fetch("https://petlatkea.dk/2021/hogwarts/students.json")
     .then((response) => response.json())
     .then((jsonData) => {
@@ -41,28 +50,42 @@ function loadJSON() {
     });
 }
 document.addEventListener("DOMContentLoaded", filterButtonActive);
+document.addEventListener("DOMContentLoaded", sortButtonActive);
 
+//function to listen after filter button has been clicked
 function filterButtonActive() {
   //add eventlistener for when a filter has been changed
   filterButton.addEventListener("click", () => {
     //filter all students into correct lists based on filter and display the array
     if (filterActive.value === "Gryffindor") {
       gryffindorStudentsList = allStudents.filter(filterGryffindor);
-      displayListwithFilter(gryffindorStudentsList);
+      displayList(gryffindorStudentsList);
       // sortButton.addEventListener("click", selectSort());
     }
     if (filterActive.value === "Slytherin") {
       slytherinStudentsList = allStudents.filter(filterSlytherin);
-      displayListwithFilter(slytherinStudentsList);
+      displayList(slytherinStudentsList);
     }
     if (filterActive.value === "Hufflepuff") {
-      console.log(allStudents.filter(filterHufflepuff));
+      hufflepuffStudentsList = allStudents.filter(filterHufflepuff);
+      displayList(hufflepuffStudentsList);
     }
     if (filterActive.value === "Ravenclaw") {
-      console.log(allStudents.filter(filterRavenclaw));
+      ravenclawStudentsList = allStudents.filter(filterRavenclaw);
+      displayList(ravenclawStudentsList);
     }
   });
 }
+
+//function to listen after sort button has been clicked
+function sortButtonActive() {
+  sortButton.addEventListener("click", selectSort(this.value));
+}
+function selectSort(value) {
+  const sortBy = value;
+  console.log(sortBy);
+}
+
 function prepareObjects(jsonData) {
   console.log(jsonData);
   jsonData.forEach((jsonObject) => {
@@ -92,12 +115,17 @@ function prepareObjects(jsonData) {
     let result2 = "";
     //trim the end of fullname property string, so no spaces after last letter
     trimmedString2 = fullnameString.trimEnd();
+
     //make substring starting from last read space +1
     result2 = trimmedString2.substring(trimmedString2.lastIndexOf(" ") + 1);
     student.lastName =
       result2.charAt(0).toUpperCase() + result2.slice(1).toLowerCase();
+    //if trimmedString only has fullname 'Leanne'
+    if (trimmedString2 === "Leanne") {
+      student.lastName = result2;
+    }
     //if lastname has - in it
-    if (student.lastName.includes("-")) {
+    else if (student.lastName.includes("-")) {
       student.lastName =
         //start by getting first part before -
         result2.substring(0, result2.lastIndexOf("-") + 1) +
@@ -128,7 +156,7 @@ function prepareObjects(jsonData) {
     student.middleName =
       midName.charAt(0).toUpperCase() + midName.slice(1).toLowerCase();
 
-    //if middleName results in an empty string, orhas "" set property to null
+    //if middleName results in an empty string, or has "" set property to null
     if (student.middleName.includes(`"`) || student.middleName === "") {
       student.middleName = "null";
     }
@@ -237,11 +265,10 @@ function filterRavenclaw(student) {
 }
 //
 //DISPLAY STUDENTS
-function displayListwithFilter(list) {
+function displayList(list) {
   document.querySelector("h2").textContent = "Gryffindor";
   displayStudentList(list);
-
-  console.log(gryffindorStudentsList);
+  console.log(list);
 }
 
 //TODO: DISPLAY STUDENTS
@@ -268,15 +295,44 @@ function displayStudentList(list) {
     //each student in the listDisplay Node
     let studentListClone = template.content.cloneNode(true);
     //set name to each student Node
-    studentListClone.querySelector(
-      "p"
-    ).textContent = `${studentListed.firstName}`;
+
+    //bad workaround for only one name
+    if (studentListed.firstName === "Leanne") {
+      studentListClone.querySelector(
+        "p"
+      ).textContent = `${studentListed.firstName}`;
+    }
+    //if they have a nickname instead of middlename
+    else if (
+      studentListed.middleName === "null" &&
+      studentListed.nickName !== ""
+    ) {
+      studentListClone.querySelector(
+        "p"
+      ).textContent = `${studentListed.firstName} "${studentListed.nickName}" ${studentListed.lastName}`;
+    }
+    //if they don't have a middleName
+    else if (studentListed.middleName === "null") {
+      studentListClone.querySelector(
+        "p"
+      ).textContent = `${studentListed.firstName} ${studentListed.lastName} `;
+    }
+
+    //if they have a middleName
+    else {
+      studentListClone.querySelector(
+        "p"
+      ).textContent = `${studentListed.firstName} ${studentListed.middleName} ${studentListed.lastName}`;
+    }
     //append the student name to the listDisplay Container
     listToDisplay.appendChild(studentListClone);
   });
   //append template student list to display in main_list container.
-  document.querySelector(".main_list").appendChild(listToDisplay);
+  return document.querySelector(".main_list").appendChild(listToDisplay);
 }
+
+//in order to build the view
+// buildList()
 
 //SORT THE STUDENTS
 //selected sort value
