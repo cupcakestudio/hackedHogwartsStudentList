@@ -270,56 +270,76 @@ function displayStudentList(list) {
     //each student in the listDisplay Node
     let studentListClone = template.content.cloneNode(true);
     //set name to each student Node
-
+    const nameDisplay = studentListClone.querySelector("p");
     //bad workaround for only one name
     if (studentListed.firstName === "Leanne") {
-      studentListClone.querySelector(
-        "p"
-      ).textContent = `${studentListed.firstName}`;
+      nameDisplay.textContent = `${studentListed.firstName}`;
     }
     //if they have a nickname instead of middlename
     else if (
       studentListed.middleName === "null" &&
       studentListed.nickName !== ""
     ) {
-      studentListClone.querySelector(
-        "p"
-      ).textContent = `${studentListed.firstName} "${studentListed.nickName}" ${studentListed.lastName}`;
+      nameDisplay.textContent = `${studentListed.firstName} "${studentListed.nickName}" ${studentListed.lastName}`;
     }
     //if they don't have a middleName
     else if (studentListed.middleName === "null") {
-      studentListClone.querySelector(
-        "p"
-      ).textContent = `${studentListed.firstName} ${studentListed.lastName} `;
+      nameDisplay.textContent = `${studentListed.firstName} ${studentListed.lastName} `;
     }
 
     //if they have a middleName
     else {
-      studentListClone.querySelector(
-        "p"
-      ).textContent = `${studentListed.firstName} ${studentListed.middleName} ${studentListed.lastName}`;
+      nameDisplay.textContent = `${studentListed.firstName} ${studentListed.middleName} ${studentListed.lastName}`;
     }
-    studentListClone.querySelector("p").addEventListener("click", detailsPopop);
+    nameDisplay.addEventListener("click", detailsPopop);
     //DETAILS POPOP
     function detailsPopop() {
       console.log("i have beenclicked");
 
       const detailsList = document.querySelector(".details");
+      const detailImg = detailsList.querySelector("img");
+      const bloodIcon = detailsList.querySelector(".bloodtype img");
       //details about the student data is loaded here
       detailsList.style.display = "block";
+
+      //LOAD IMAGES IN DETAILS
       // //images to display for each student
 
-      // // read imagefile name based on their lastname in lower case to match
+      //  read imagefile name based on their lastname in lower case to match
       let imageFile = studentListed.lastName.toLowerCase();
-      detailsList.querySelector(
-        "img"
-      ).src = `images/${imageFile}_${studentListed.firstName
+      detailImg.src = `images/${imageFile}_${studentListed.firstName
         .charAt(0)
         .toLowerCase()}.png`;
+      //if lastnames are identical, this case 'patil'
+      if (imageFile.includes("patil")) {
+        detailImg.src = `images/${imageFile}_${studentListed.firstName}.png`;
+      } else if (imageFile.includes("-")) {
+        //if student has hyphen in lastname, start from char after hyphen. but with same pattern
+        imageFile = studentListed.lastName
+          .substring(studentListed.lastName.indexOf("-") + 1)
+          .toLowerCase();
 
+        detailImg.src = `images/${imageFile}_${studentListed.firstName
+          .charAt(0)
+          .toLowerCase()}.png`;
+      } else if (imageFile.includes("leanne")) {
+        detailImg.src = "";
+        detailImg.alt = "Not Available";
+      }
+      //NAME OF STUDENT
+      detailsList.querySelector(".name").textContent = nameDisplay.textContent;
+      //BLOODSTATUS
+      // detailsList.querySelector(".bloodtype").textContent =
+      //   "BloodStatus:" + bloodIcon.src("BloodIcon");
+      //CLOSE DETAILS
       detailsList
         .querySelector("#close")
         .addEventListener("click", () => (detailsList.style.display = "none"));
+      //when filter gets changes also close the details popop
+      filterActive.addEventListener(
+        "change",
+        () => (detailsList.style.display = "none")
+      );
 
       document.querySelector(".main_list").append(detailsList);
     }
