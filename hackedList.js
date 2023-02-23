@@ -9,12 +9,6 @@ const Student = {
   house: "",
 };
 
-// const settings = {
-//   filter: "0",
-//   sortBy: "name",
-//   sortDirection: "asc",
-// };
-
 //filter dropdown menu
 const filterActive = document.querySelector("#filtering");
 
@@ -22,34 +16,6 @@ const filterActive = document.querySelector("#filtering");
 const sortingActive = document.querySelector("#sorting");
 //search field
 const searchValue = document.querySelector("#search");
-
-//get field value for filter and sort
-//sort on cases which corresponds to sort field value using localeCompare();
-//return that to the filter function in order to filter allStudents array correctly, based on filter field value.
-function getFilterSortSearchValues() {
-  return allStudents
-    .filter(
-      (s) =>
-        (s.house === filterActive.value ||
-          (s.prefect && filterActive.value === "Prefects") ||
-          (s.squad && filterActive.value === "Inquisitor Squad") ||
-          (s.expelled && filterActive.value === "Expelled")) &&
-        //searching across searchValue and compare to the students names
-        (s.firstName + " " + s.lastName).includes(searchValue.value)
-    )
-    .sort((s1, s2) => {
-      //expr in switch statement is the thing i want to check
-      switch (sortingActive.value) {
-        //expr in case statement is the string i want to check against.
-        case "Firstname":
-          return s1.firstName.localeCompare(s2.firstName);
-        case "Lastname":
-          return s1.lastName.localeCompare(s2.lastName);
-        default:
-          0;
-      }
-    });
-}
 
 //all List arrays
 const allStudents = [];
@@ -79,7 +45,35 @@ async function loadJSON() {
     });
 }
 
-// document.addEventListener("DOMContentLoaded", selectSort);
+//get field value for filter and sort
+//sort on cases which corresponds to sort field value using localeCompare(), e.g. sort alphabetically;
+//return that to the filter function in order to filter allStudents array correctly, based on filter field value.
+function getFilterSortSearchValues() {
+  return allStudents
+    .filter(
+      (
+        s //filter after the student filter dropdown property
+      ) =>
+        (s.house === filterActive.value ||
+          (s.prefect && filterActive.value === "Prefects") ||
+          (s.squad && filterActive.value === "Inquisitor Squad") ||
+          (s.expelled && filterActive.value === "Expelled")) &&
+        //filter after searchfield - searching across searchValue and compare to the students names
+        (s.firstName + " " + s.lastName).includes(searchValue.value)
+    ) //SORTING
+    .sort((s1, s2) => {
+      //expr in switch statement is the thing i want to check
+      switch (sortingActive.value) {
+        //expr in case statement is the string i want to check against.
+        case "Firstname":
+          return s1.firstName.localeCompare(s2.firstName);
+        case "Lastname":
+          return s1.lastName.localeCompare(s2.lastName);
+        default:
+          0;
+      }
+    });
+}
 
 //Eventlistener for FILTERING dropdown menu activate
 
@@ -270,7 +264,7 @@ function displayStudentList(list) {
   // listToDisplay.querySelector("h2").textContent = student.house;
   // get list name from filtervalue and make sure that #ListDisplay keeps div and headline and p tag before template tag's students get inserted
   listToDisplay.innerHTML = `<h2>${filterActive.value}</h2>
-  <p class="StudentHeadline">Students:</p>`;
+  <h3 class="StudentHeadline">Students:</h3>`;
   //clear displayList each time it studentListToDisplay gets run w/ filter (and or sort.)
   StudentListToDisplay.forEach((studentListed) => {
     //each student in the listDisplay Node
@@ -306,6 +300,29 @@ function displayStudentList(list) {
       ).textContent = `${studentListed.firstName} ${studentListed.middleName} ${studentListed.lastName}`;
     }
     studentListClone.querySelector("p").addEventListener("click", detailsPopop);
+    //DETAILS POPOP
+    function detailsPopop() {
+      console.log("i have beenclicked");
+
+      const detailsList = document.querySelector(".details");
+      //details about the student data is loaded here
+      detailsList.style.display = "block";
+      // //images to display for each student
+
+      // // read imagefile name based on their lastname in lower case to match
+      let imageFile = studentListed.lastName.toLowerCase();
+      detailsList.querySelector(
+        "img"
+      ).src = `images/${imageFile}_${studentListed.firstName
+        .charAt(0)
+        .toLowerCase()}.png`;
+
+      detailsList
+        .querySelector("#close")
+        .addEventListener("click", () => (detailsList.style.display = "none"));
+
+      document.querySelector(".main_list").append(detailsList);
+    }
     //append the student name to the listDisplay Container
     listToDisplay.appendChild(studentListClone);
   });
@@ -316,10 +333,6 @@ function displayStudentList(list) {
   ).textContent = ` Total of Students: ${StudentListToDisplay.length}`;
   //append template student list to display in main_list container.
   return document.querySelector(".main_list").appendChild(listToDisplay);
-}
-//DETAILS POPOP
-function detailsPopop() {
-  console.log("i have beenclicked");
 }
 
 //in order to build the view
