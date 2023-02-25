@@ -45,6 +45,15 @@ async function loadJSON() {
     });
 }
 
+//BLOODSTATUS LIST
+async function getBloodStatus() {
+  const blooddata = await fetch(
+    "https://petlatkea.dk/2021/hogwarts/families.json"
+  );
+  const bloodstatus = await blooddata.json();
+  console.log(bloodstatus);
+  setBloodStatus(bloodstatus);
+}
 //get field value for filter and sort
 //sort on cases which corresponds to sort field value using localeCompare(), e.g. sort alphabetically;
 //return that to the filter function in order to filter allStudents array correctly, based on filter field value.
@@ -230,12 +239,34 @@ function prepareObjects(jsonData) {
         .toLowerCase()}.png`;
       student.image = image.src;
     }
+
     console.log(student.image);
+
     allStudents.push(student);
   });
+  setBloodStatus(getBloodStatus());
   //make array to a table
   console.table(allStudents);
   return allStudents.student;
+}
+
+//SET BLOODSTATUS TO EACH STUDENT BASED ON BLOODSTATUSLIST
+function setBloodStatus(bloodstatus) {
+  // console.log(allStudents);
+  allStudents.forEach((s) => {
+    s.isHalf =
+      bloodstatus.half.includes(s.lastName) ||
+      (bloodstatus.pure.includes(s.lastName) &&
+        bloodstatus.half.includes(s.lastName));
+    s.isPure =
+      bloodstatus.pure.includes(s.lastName) &&
+      !bloodstatus.half.includes(s.lastName);
+    s.isMuggle =
+      !bloodstatus.half.includes(s.lastName) &&
+      !bloodstatus.pure.includes(s.lastName);
+    // return s.isBloodStatus;
+  });
+  return allStudents;
 }
 
 //
@@ -292,6 +323,7 @@ function displayStudentList(list) {
       nameDisplay.textContent = `${studentListed.firstName} ${studentListed.middleName} ${studentListed.lastName}`;
     }
     nameDisplay.addEventListener("click", detailsPopop);
+
     //DETAILS POPOP
     function detailsPopop() {
       console.log("i have beenclicked");
@@ -329,6 +361,19 @@ function displayStudentList(list) {
       //NAME OF STUDENT
       detailsList.querySelector(".name").textContent = nameDisplay.textContent;
       //BLOODSTATUS
+      //get the bloodstatus in here!!!
+
+      // setBloodStatus(bloodListArray);
+      if (studentListed.isHalf) {
+        bloodIcon.textContent = "half";
+      } else if (studentListed.isPure) {
+        bloodIcon.textContent = "Pure";
+      } else {
+        bloodIcon.textContent = "Muggle";
+      }
+
+      detailsList.querySelector(".bloodtype").textContent =
+        `BloodStatus: ` + bloodIcon.textContent;
       // detailsList.querySelector(".bloodtype").textContent =
       //   "BloodStatus:" + bloodIcon.src("BloodIcon");
       //CLOSE DETAILS
@@ -341,7 +386,7 @@ function displayStudentList(list) {
         () => (detailsList.style.display = "none")
       );
 
-      document.querySelector(".main_list").append(detailsList);
+      document.querySelector(".main_list").appendChild(detailsList);
     }
     //append the student name to the listDisplay Container
     listToDisplay.appendChild(studentListClone);
