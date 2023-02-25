@@ -302,6 +302,8 @@ function displayStudentList(list) {
     let studentListClone = template.content.cloneNode(true);
     //set name to each student Node
     const nameDisplay = studentListClone.querySelector("p");
+    const bloodDisplayIcon = studentListClone.querySelector("img");
+
     //bad workaround for only one name
     if (studentListed.firstName === "Leanne") {
       nameDisplay.textContent = `${studentListed.firstName}`;
@@ -322,6 +324,16 @@ function displayStudentList(list) {
     else {
       nameDisplay.textContent = `${studentListed.firstName} ${studentListed.middleName} ${studentListed.lastName}`;
     }
+
+    //display bloodicon in the list overview
+    if (studentListed.isHalf) {
+      bloodDisplayIcon.src = `picture_materials/halfBlood_icon.svg`;
+      // bloodIcon.src = "picture_materials/halfBlood_icon.svg";
+    } else if (studentListed.isPure) {
+      bloodDisplayIcon.src = `picture_materials/pureBlood_icon.svg`;
+    } else {
+      bloodDisplayIcon.src = `picture_materials/Muggle_icon.svg`;
+    }
     nameDisplay.addEventListener("click", detailsPopop);
 
     //DETAILS POPOP
@@ -330,7 +342,7 @@ function displayStudentList(list) {
 
       const detailsList = document.querySelector(".details");
       const detailImg = detailsList.querySelector("img");
-      const bloodIcon = detailsList.querySelector(".bloodtype img");
+      const bloodIcon = detailsList.querySelector(".bloodStatusImg");
       //details about the student data is loaded here
       detailsList.style.display = "block";
 
@@ -364,16 +376,21 @@ function displayStudentList(list) {
       //get the bloodstatus in here!!!
 
       // setBloodStatus(bloodListArray);
+
+      detailsList.querySelector(".bloodtype").textContent = `BloodStatus: `;
       if (studentListed.isHalf) {
-        bloodIcon.textContent = "half";
+        bloodIcon.src = `picture_materials/halfBlood_icon.svg`;
+        // bloodIcon.src = "picture_materials/halfBlood_icon.svg";
       } else if (studentListed.isPure) {
-        bloodIcon.textContent = "Pure";
+        bloodIcon.src = `picture_materials/pureBlood_icon.svg`;
       } else {
-        bloodIcon.textContent = "Muggle";
+        bloodIcon.src = `picture_materials/Muggle_icon.svg`;
       }
 
-      detailsList.querySelector(".bloodtype").textContent =
-        `BloodStatus: ` + bloodIcon.textContent;
+      // bloodIcon.src = `picture_materials/halfBlood_icon.svg`;
+      // detailsList.querySelector(".bloodtype .bloodStatusImg").src =
+      //   "picture_materials/halfBlood_icon.svg";
+
       // detailsList.querySelector(".bloodtype").textContent =
       //   "BloodStatus:" + bloodIcon.src("BloodIcon");
       //CLOSE DETAILS
