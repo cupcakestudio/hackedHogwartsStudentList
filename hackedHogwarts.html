@@ -9,57 +9,76 @@
   </head>
   <body>
     <header><h1>Hogwarts Student List</h1></header>
-    <div class="info_list">Total of Students:</div>
+
     <nav class="buttons_and_dropdown">
       <select id="filtering">
-        <option value="0">Write query here</option>
-        <option value="1">House: Gryffindor</option>
-        <option value="2">House: Slythering</option>
-        <option value="3">House: Hufflepuff</option>
-        <option value="4">House: Ravenclaw</option>
-        <option value="5">Prefects</option>
-        <option value="6">Inquisitor Squad</option>
+        <option value="0">Select filter</option>
+        <option value="Gryffindor">House: Gryffindor</option>
+        <option value="Slytherin">House: Slytherin</option>
+        <option value="Hufflepuff">House: Hufflepuff</option>
+        <option value="Ravenclaw">House: Ravenclaw</option>
+        <option value="Prefects">Prefects</option>
+        <option value="Inquisitor Squad">Inquisitor Squad</option>
+        <option value="Expelled">Expelled Students</option>
       </select>
 
-      <label><button id="filter">Filter</button></label>
+      <select id="sorting">
+        <option value="0">Select sorting</option>
+        <option value="Firstname">Firstname</option>
+        <option value="Lastname">Lastname</option>
+      </select>
 
-      <input type="text" /> <label><button id="sort">Sort</button></label>
-      <input type="search" placeholder="Search query here" />
-      <label><button id="search">Search</button></label>
+      <input type="search" placeholder="Search query here" id="search" />
     </nav>
-
+    <div class="info_list"></div>
     <main class="main_list">
       <!-- house crests -->
       <div id="GhouseCrest">
-        <img />
+        <img src="picture_materials/Gryffindor_emblem.svg" />
         <p>Courageous, brave and determination</p>
       </div>
       <div id="ShouseCrest">
-        <img />
+        <img src="picture_materials/Slytherin_emblem.svg" />
         <p>Cunning, resourceful and ambitious</p>
       </div>
       <div id="HhouseCrest">
-        <img />
+        <img src="picture_materials/Hufflepuff_emblem.svg" />
         <p>Hardworking, loyal and trustworthy</p>
       </div>
       <div id="RhouseCrest">
-        <img />
+        <img src="picture_materials/Ravenclaw_emblem.svg" />
         <p>Witty, creative and eccentric</p>
       </div>
     </main>
     <!-- different lists -->
-    <template class="houseStudentList">
-      <div>
-        <div class="Gstudentlists"><h2></h2></div>
-        <div class="Sstudentlists"><h2></h2></div>
-        <div class="Hstudentlists"><h2></h2></div>
-        <div class="Rstudentlists"><h2></h2></div>
+    <div class="ListOverview">
+      <img id="houseBanner" />
+      <h3 class="StudentHeadline">Students:</h3>
+
+      <div id="ListDisplay">
+        <template class="FilteredStudentList"
+          ><div class="studentListed">
+            <p></p>
+            <img class="bloodStatusImgDisplay" />
+          </div>
+        </template>
       </div>
-    </template>
+    </div>
     <section class="details">
-      <button id="luk">X</button>
-      <li class="name"></li>
-      <li class="movie"></li>
+      <button id="close">X</button>
+      <img />
+
+      <div class="houseDetailsFlex">
+        <li class="name"></li>
+        <!-- <p>House:</p> -->
+        <img class="houseEmblem" />
+      </div>
+      <div class="bloodDetailsFlex">
+        <li class="bloodtype"></li>
+        <img class="bloodStatusImg" />
+      </div>
+      <li class="isPrefect"></li>
+      <li class="isSquad"></li>
     </section>
     <footer></footer>
   </body>

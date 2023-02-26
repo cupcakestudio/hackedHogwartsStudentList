@@ -1,5 +1,9 @@
+
 body {
   background-color: var(--Dark-Night-Sky-Clouds);
+  /* background-image: url(picture_materials/Hogwarts-legacy-desktop.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; */
 }
 
 /*TITEL STYLING*/
@@ -12,6 +16,11 @@ background-color: var(--paper);
 h1 {display: flex;
   flex-direction: row;
   justify-content: center;}
+#houseBanner, h3 {
+  display: grid;
+  justify-content: center;
+}
+h3{margin: 0; font-size: x-large;}
 
 .buttons_and_dropdown{
   display: flex;
@@ -33,58 +42,132 @@ max-height: 100vh;
 column-gap: 10px;
 margin: 0px 10px 0px 10px;
 }
+/*FOR STUDENT LIST TO BE DISPLAYED*/
+.main_list.studentList > div{
+  grid-column: 2;
+  height: max-content; 
+  }
 .main_list > div{
   margin-top: 20px;
   border: 5px solid black;
   height: 70vh;
   background-color: var(--paper);
   }
+ div.hide {display: none;}
 
+#GhouseCrest, #ShouseCrest, #HhouseCrest, #RhouseCrest {
+  display: grid; justify-content: space-evenly; 
+
+}
+
+#GhouseCrest.hide, #ShouseCrest.hide, #HhouseCrest.hide, #RhouseCrest.hide {
+  display:none
+
+}
 #GhouseCrest, #GhouseCrest p{
+  
+  margin-top: auto;
   background-color: var(--gryfRed);
   border-color: var(--gryfGold);
   color: whitesmoke;
 }
 #ShouseCrest, #ShouseCrest p{
+  margin-top: auto;
   background-color: var(--slytGreen);
   border-color: var(--slytSilver);
   color: whitesmoke;
 }
 #HhouseCrest, #HhouseCrest p{
+  margin-top: auto;
   background-color: var(--huffYellow);
   border-color: var(--huffBlack);
   color: whitesmoke;
 }
 #RhouseCrest, #RhouseCrest p{
+   margin-top: auto;
   background-color: var(--raveBlue);
   border-color: var(--raveBronze);
   color: whitesmoke;
 }
+
  p {
   font-family: cursive;
+  color:#ff2400;
 }
-div > p {
+
+
+.main_list.studentList > p{
   display: flex;
-  justify-content: center ;
+  justify-content: start ;
+  cursor: pointer;
 }  
 
+/*STUDENT LIST DISPLAY*/ 
+.main_list.studentList p{
+  width: 300px;
+ cursor: pointer;
+}
+li {
+  font-family: cursive;
+  color:#ff2400;
+  list-style: none;
+  align-self: center;
+}
+
  /*DETAILS*/
+ .main_list.studentList > section{
+  grid-column: 3; 
+  }
+
+  .main_list > section {
+    margin-top: 20px;
+    /* border: 5px solid black; */
+    height: 70vh;
+    background-color: var(--paper);
+  }
+
  .details {
   display: none;
-  position: fixed;
-  width: 50vw;
-  height: 50vh;
-  top: 0vh;
-  left: 50vh;
-  /* change background color acc. to student's house */
+  margin-top: 20px;
+  border: 5px solid black;
+  
+  height: max-content;
   background-color: var(--paper);
+  
+  
+  /* change background color acc. to student's house */
+   background-color: var(--paper);
+/*    
+   border-left: 100px solid transparent;
+   border-right: 100px solid red;
+   border-bottom: 100px solid transparent;
+   border-top: 100px solid transparent; */
+}
+.details > img{  justify-self: center;}
+ .details > button {
+  border: none;
+   background-color: var(--paper);
+   justify-self: start;
 }
  
+
+
+
+/*bloodstatus*/
+/*bloodDisplayIcon */
+.studentListed, .bloodDetailsFlex, .houseDetailsFlex {
+ display: flex;
+}
+.studentListed > .bloodStatusImgDisplay , .bloodDetailsFlex > .bloodStatusImg, .houseDetailsFlex > .houseEmblem{
+  margin-left: auto;
+max-width: 50px;
+}
+
 /*COLORS*
 /* Color Theme Swatches in Hex */
 :root {
 --Dark-Night-Sky-Clouds:   #0f244d; 
---paper: blanchedalmond;
+--paper: #ffebcd;
 /* gryffindor color and accents */
 --gryfRed: #ff2400;
 --gryfGold: #FFD700;

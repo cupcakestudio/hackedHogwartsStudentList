@@ -34,6 +34,7 @@ window.addEventListener("DOMContentLoaded", start);
 function start() {
   console.log("ready");
   loadJSON();
+  document.querySelector("#ListDisplay").classList.add("hide");
 }
 
 async function loadJSON() {
@@ -99,19 +100,6 @@ sortingActive.addEventListener("change", () =>
 searchValue.addEventListener("input", () =>
   displayList(getFilterSortSearchValues())
 );
-
-//function to listen after sort button has been clicked
-
-// function selectSort() {
-//   const sortBy = sortingActive.value;
-//   console.log(sortBy);
-
-//   const sortedList = filteredStudentsList.sort((a, b) =>
-//     a.firstName.localeCompare(b.firstName)
-//   );
-//   console.log(filteredStudentsList);
-//   displayList(sortedList);
-// }
 
 function prepareObjects(jsonData) {
   console.log(jsonData);
@@ -244,6 +232,7 @@ function prepareObjects(jsonData) {
 
     allStudents.push(student);
   });
+  //loading new properties (bloodstatus) in the allStudents array.
   setBloodStatus(getBloodStatus());
   //make array to a table
   console.table(allStudents);
@@ -272,7 +261,7 @@ function setBloodStatus(bloodstatus) {
 //
 //DISPLAY STUDENTS
 function displayList(list) {
-  document.querySelector("h2").textContent = "";
+  // document.querySelector("h2").textContent = "";
   displayStudentList(list);
   console.log(list);
 }
@@ -284,6 +273,7 @@ function displayStudentList(list) {
   document.querySelector("#ShouseCrest").classList.add("hide");
   document.querySelector("#HhouseCrest").classList.add("hide");
   document.querySelector("#RhouseCrest").classList.add("hide");
+  document.querySelector("#ListDisplay").classList.remove("hide");
 
   document.querySelector(".main_list").classList.add("studentList");
 
@@ -292,18 +282,31 @@ function displayStudentList(list) {
 
   //get h2 house name to get display
   let listToDisplay = document.querySelector("#ListDisplay");
+  let listOverview = document.querySelector(".ListOverview");
+  //get house banner
+  const banner = listOverview.querySelector("#houseBanner");
   // listToDisplay.querySelector("h2").textContent = student.house;
   // get list name from filtervalue and make sure that #ListDisplay keeps div and headline and p tag before template tag's students get inserted
-  listToDisplay.innerHTML = `<h2>${filterActive.value}</h2>
-  <h3 class="StudentHeadline">Students:</h3>`;
-  //clear displayList each time it studentListToDisplay gets run w/ filter (and or sort.)
+  if (filterActive.value === "Gryffindor") {
+    banner.src = "picture_materials/Gryf_houseBanner.svg";
+  } else if (filterActive.value === "Slytherin") {
+    banner.src = "picture_materials/Slyt_houseBanner.svg";
+  } else if (filterActive.value === "Hufflepuff") {
+    banner.src = "picture_materials/Huff_houseBanner.svg";
+  } else {
+    banner.src = "picture_materials/Rave_houseBanner.svg";
+  }
+  //clear listToDisplay container each time it studentListToDisplay gets run w/ filter (and or sort.)
+  listToDisplay.innerHTML = ``;
+
   StudentListToDisplay.forEach((studentListed) => {
     //each student in the listDisplay Node
     let studentListClone = template.content.cloneNode(true);
     //set name to each student Node
     const nameDisplay = studentListClone.querySelector("p");
-    const bloodDisplayIcon = studentListClone.querySelector("img");
-
+    const bloodStatusImgDisplay = studentListClone.querySelector(
+      `.bloodStatusImgDisplay`
+    );
     //bad workaround for only one name
     if (studentListed.firstName === "Leanne") {
       nameDisplay.textContent = `${studentListed.firstName}`;
@@ -325,15 +328,14 @@ function displayStudentList(list) {
       nameDisplay.textContent = `${studentListed.firstName} ${studentListed.middleName} ${studentListed.lastName}`;
     }
 
-    //display bloodicon in the list overview
     if (studentListed.isHalf) {
-      bloodDisplayIcon.src = `picture_materials/halfBlood_icon.svg`;
-      // bloodIcon.src = "picture_materials/halfBlood_icon.svg";
+      bloodStatusImgDisplay.src = `picture_materials/halfBlood_icon.svg`;
     } else if (studentListed.isPure) {
-      bloodDisplayIcon.src = `picture_materials/pureBlood_icon.svg`;
+      bloodStatusImgDisplay.src = `picture_materials/pureBlood_icon.svg`;
     } else {
-      bloodDisplayIcon.src = `picture_materials/Muggle_icon.svg`;
+      bloodStatusImgDisplay.src = `picture_materials/Muggle_icon.svg`;
     }
+
     nameDisplay.addEventListener("click", detailsPopop);
 
     //DETAILS POPOP
@@ -342,9 +344,10 @@ function displayStudentList(list) {
 
       const detailsList = document.querySelector(".details");
       const detailImg = detailsList.querySelector("img");
+      const houseEmblem = detailsList.querySelector(".houseEmblem");
       const bloodIcon = detailsList.querySelector(".bloodStatusImg");
       //details about the student data is loaded here
-      detailsList.style.display = "block";
+      detailsList.style.display = "grid";
 
       //LOAD IMAGES IN DETAILS
       // //images to display for each student
@@ -370,13 +373,21 @@ function displayStudentList(list) {
         detailImg.src = "";
         detailImg.alt = "Not Available";
       }
+      //HOUSE EMBLEM
+      if (studentListed.house === "Gryffindor") {
+        houseEmblem.src = `picture_materials/Gryffindor_emblem.svg`;
+        // houseEmblem.src = "picture_materials/halfBlood_icon.svg";
+      } else if (studentListed.house === "Slytherin") {
+        houseEmblem.src = `picture_materials/Slytherin_emblem.svg`;
+      } else if (studentListed.house === "Hufflepuff") {
+        houseEmblem.src = `picture_materials/Hufflepuff_emblem.svg`;
+      } else {
+        houseEmblem.src = `picture_materials/Ravenclaw_emblem.svg`;
+      }
       //NAME OF STUDENT
       detailsList.querySelector(".name").textContent = nameDisplay.textContent;
-      //BLOODSTATUS
-      //get the bloodstatus in here!!!
 
-      // setBloodStatus(bloodListArray);
-
+      //BLOODSTATUS - icons!
       detailsList.querySelector(".bloodtype").textContent = `BloodStatus: `;
       if (studentListed.isHalf) {
         bloodIcon.src = `picture_materials/halfBlood_icon.svg`;
@@ -386,13 +397,7 @@ function displayStudentList(list) {
       } else {
         bloodIcon.src = `picture_materials/Muggle_icon.svg`;
       }
-
-      // bloodIcon.src = `picture_materials/halfBlood_icon.svg`;
-      // detailsList.querySelector(".bloodtype .bloodStatusImg").src =
-      //   "picture_materials/halfBlood_icon.svg";
-
-      // detailsList.querySelector(".bloodtype").textContent =
-      //   "BloodStatus:" + bloodIcon.src("BloodIcon");
+      //TODO: TOGGLE PREFECTS AND EXPEL STUDENTS - make funcitonality and activity diagram
       //CLOSE DETAILS
       detailsList
         .querySelector("#close")
@@ -414,68 +419,5 @@ function displayStudentList(list) {
     ".info_list"
   ).textContent = ` Total of Students: ${StudentListToDisplay.length}`;
   //append template student list to display in main_list container.
-  return document.querySelector(".main_list").appendChild(listToDisplay);
+  return document.querySelector(".main_list").appendChild(listOverview);
 }
-
-//in order to build the view
-// buildList()
-
-//SORT THE STUDENTS
-//selected sort value
-// function selectSort(event) {
-//   const sortBy = event.target.value;
-//   console.log(sortBy);
-// }
-// function sortList(list) {
-//   if (studentA.firstname > studentB.firstname) {
-//     return console.log();
-//   }
-// }
-
-//SORTING??
-// function sortList(){
-//   const currentList =
-// }
-// //filter one student after it's house
-
-// function isGryffindor(student) {
-//   //got the code line inspired by mdn filter by search query
-//   //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
-//   // const gryffindorStudentsList = allStudents.filter((student) =>
-//   //   student.house.includes("Gryffindor")
-//   // );
-//   if (student.house === "Gryffindor") {
-//     return true;
-//   }
-//   return false;
-//   // console.log(gryffindorStudentsList);
-//   // return gryffindorStudentsList;
-// }
-
-// function isSlytherin(student) {
-//   // const slytherinStudentsList = allStudents.filter((student) =>
-//   //   student.house.includes("Slytherin")
-//   // );
-//   if (student.house === "Slytherin") {
-//     return true;
-//   }
-//   return false;
-// }
-// function isHufflepuff(student) {
-//   // const hufflepuffStudentsList = allStudents.filter((student) =>
-//   //   student.house.includes("Hufflepuff")
-//   // );
-//   if (student.house === "Hufflepuff") {
-//     return true;
-//   }
-//   return false;
-// }
-// function isRavenclaw(student) {
-//   // const ravenclawStudentsList = allStudents.filter((student) =>
-//   //   student.house.includes("Ravenclaw")
-//   // );
-//   if (student.house === "Ravenclaw") {
-//     return true;
-//   }
-//   return false;
-// }
