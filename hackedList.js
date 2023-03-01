@@ -19,6 +19,7 @@ const searchValue = document.querySelector("#search");
 
 //all List arrays
 const allStudents = [];
+const prefectArray = [];
 
 // global var
 // let template = document.querySelector(".FilteredStudentList");
@@ -34,6 +35,7 @@ window.addEventListener("DOMContentLoaded", start);
 function start() {
   console.log("ready");
   loadJSON();
+  document.querySelector(".StudentHeadline").classList.add("hide");
   document.querySelector("#ListDisplay").classList.add("hide");
 }
 
@@ -52,7 +54,6 @@ async function getBloodStatus() {
     "https://petlatkea.dk/2021/hogwarts/families.json"
   );
   const bloodstatus = await blooddata.json();
-  console.log(bloodstatus);
   setBloodStatus(bloodstatus);
 }
 //get field value for filter and sort
@@ -230,12 +231,16 @@ function prepareObjects(jsonData) {
 
     console.log(student.image);
 
+    //set prefect status test
+    student.prefect = false;
+
     allStudents.push(student);
   });
   //loading new properties (bloodstatus) in the allStudents array.
   setBloodStatus(getBloodStatus());
-  //make array to a table
+
   console.table(allStudents);
+
   return allStudents.student;
 }
 
@@ -253,8 +258,8 @@ function setBloodStatus(bloodstatus) {
     s.isMuggle =
       !bloodstatus.half.includes(s.lastName) &&
       !bloodstatus.pure.includes(s.lastName);
-    // return s.isBloodStatus;
   });
+
   return allStudents;
 }
 
@@ -293,8 +298,12 @@ function displayStudentList(list) {
     banner.src = "picture_materials/Slyt_houseBanner.svg";
   } else if (filterActive.value === "Hufflepuff") {
     banner.src = "picture_materials/Huff_houseBanner.svg";
-  } else {
+  } else if (filterActive.value === "Ravenclaw") {
     banner.src = "picture_materials/Rave_houseBanner.svg";
+  } else if (filterActive.value === "Prefects") {
+    banner.src = "picture_materials/prefectBanner.svg";
+  } else if (filterActive.value === "Inquisitor Squad") {
+    banner.src = "";
   }
   //clear listToDisplay container each time it studentListToDisplay gets run w/ filter (and or sort.)
   listToDisplay.innerHTML = ``;
@@ -335,8 +344,6 @@ function displayStudentList(list) {
     } else {
       bloodStatusImgDisplay.src = `picture_materials/Muggle_icon.svg`;
     }
-
-    nameDisplay.addEventListener("click", detailsPopop);
 
     //DETAILS POPOP
     function detailsPopop() {
@@ -398,6 +405,36 @@ function displayStudentList(list) {
         bloodIcon.src = `picture_materials/Muggle_icon.svg`;
       }
       //TODO: TOGGLE PREFECTS AND EXPEL STUDENTS - make funcitonality and activity diagram
+      detailsList.querySelector(".isPrefect").textContent = "Prefect: ";
+      detailsList
+        .querySelector(".makePrefect")
+        .addEventListener("click", clickPrefect);
+      //TODO: MAKE SURE IT ONLY CHANGES SO THAT A NEW ONE CAN BE A PREFECT
+      function clickPrefect() {
+        if (!studentListed.prefect && prefectArray.length === 2) {
+          document.querySelector(".removePrefect").classList.remove("hide");
+          document
+            .querySelector("#removePrefectA")
+            .addEventListener("click", () => {
+              removePrefect(studentListed);
+            });
+          console.log("removed has been clicked");
+          // alert("only 2 prefects!");
+          // detailsList.querySelector(".isPrefect").textContent += "";
+          // removePrefectAB(studentListed);
+        } else if (!studentListed.prefect && prefectArray.length < 2) {
+          studentListed.prefect = true;
+          // detailsList.querySelector(".isPrefect").textContent += "Yes";
+          togglePrefect(studentListed);
+        }
+      }
+      if (studentListed.prefect) {
+        console.log("Im a prefect");
+        detailsList.querySelector(".PrefectBoolText").textContent = "Yes";
+      } else {
+        detailsList.querySelector(".PrefectBoolText").textContent = "";
+      }
+      // && prefectArray.length < 2
       //CLOSE DETAILS
       detailsList
         .querySelector("#close")
@@ -410,6 +447,7 @@ function displayStudentList(list) {
 
       document.querySelector(".main_list").appendChild(detailsList);
     }
+    nameDisplay.addEventListener("click", detailsPopop);
     //append the student name to the listDisplay Container
     listToDisplay.appendChild(studentListClone);
   });
@@ -417,7 +455,57 @@ function displayStudentList(list) {
   //interface display of information about the lists
   document.querySelector(
     ".info_list"
-  ).textContent = ` Total of Students: ${StudentListToDisplay.length}`;
+  ).textContent = ` Total of Students: ${allStudents.length},`;
+  // if (filterActive.value === "Gryffindor") {
+  //   document.querySelector(
+  //     ".info_list"
+  //   ).textContent = ` Students in House: ${StudentListToDisplay.length}`;
+  // }
+  if (filterActive.value === "Slytherin") {
+    document.querySelector(
+      ".info_list"
+    ).textContent += ` Students in House: ${StudentListToDisplay.length}`;
+  } else if (filterActive.value === "Hufflepuff") {
+    document.querySelector(
+      ".info_list"
+    ).textContent += ` Students in House: ${StudentListToDisplay.length}`;
+  } else {
+    document.querySelector(
+      ".info_list"
+    ).textContent += ` Students in House: ${StudentListToDisplay.length}`;
+  }
   //append template student list to display in main_list container.
   return document.querySelector(".main_list").appendChild(listOverview);
+}
+
+function removePrefectAB(studentPrefect) {
+  // document.querySelector(".removePrefect").classList.remove("hide");
+  // document
+  //   .querySelector("#removePrefectA")
+  //   .addEventListener("click", removePrefect(studentPrefect));
+  // document
+  //   .querySelector("#removePrefectB")
+  //   .addEventListener("click", removePrefect(studentPrefect));
+  // removePrefect(studentPrefectA);
+}
+//TODO: do the same for 'that' button, so that element 1 gets replaced with another student
+function removePrefect(studentPrefect) {
+  if (studentPrefect.firstName !== prefectArray[0].firstName) {
+    prefectArray[0].prefect = false; // set element prefect 1 to be bool false, in order to replace [0] with newly added student.Prefect
+    studentPrefect.prefect = true;
+    console.log(prefectArray[0], "im false");
+    prefectArray.shift(studentPrefect);
+    prefectArray.unshift(studentPrefect);
+  }
+  console.log("remove a prefect yes");
+  document.querySelector(".PrefectBoolText").textContent = "Yes";
+
+  console.log(prefectArray);
+}
+
+function togglePrefect(studentPrefect) {
+  console.log("Truthy");
+  prefectArray.unshift(studentPrefect);
+  console.log(prefectArray);
+  document.querySelector(".isPrefect").textContent += "Yes";
 }
