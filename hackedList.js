@@ -413,11 +413,25 @@ function displayStudentList(list) {
       function clickPrefect() {
         if (!studentListed.prefect && prefectArray.length === 2) {
           document.querySelector(".removePrefect").classList.remove("hide");
+          document.querySelector(
+            "#removePrefectA"
+          ).textContent = `Replace Prefect: ${prefectArray[0].firstName} with ${studentListed.firstName}?`;
+          document.querySelector(
+            "#removePrefectB"
+          ).textContent = `Replace Prefect: ${prefectArray[1].firstName} with ${studentListed.firstName}?`;
           document
             .querySelector("#removePrefectA")
             .addEventListener("click", () => {
-              removePrefect(studentListed);
+              removePrefectA(studentListed);
+              document.querySelector(".removePrefect").classList.add("hide");
             });
+          document
+            .querySelector("#removePrefectB")
+            .addEventListener("click", () => {
+              removePrefectB(studentListed);
+              document.querySelector(".removePrefect").classList.add("hide");
+            });
+
           console.log("removed has been clicked");
           // alert("only 2 prefects!");
           // detailsList.querySelector(".isPrefect").textContent += "";
@@ -478,22 +492,36 @@ function displayStudentList(list) {
   return document.querySelector(".main_list").appendChild(listOverview);
 }
 
-function removePrefectAB(studentPrefect) {
-  // document.querySelector(".removePrefect").classList.remove("hide");
-  // document
-  //   .querySelector("#removePrefectA")
-  //   .addEventListener("click", removePrefect(studentPrefect));
-  // document
-  //   .querySelector("#removePrefectB")
-  //   .addEventListener("click", removePrefect(studentPrefect));
-  // removePrefect(studentPrefectA);
-}
+// function removePrefectAB(studentPrefect) {
+//   // document.querySelector(".removePrefect").classList.remove("hide");
+//   // document
+//   //   .querySelector("#removePrefectA")
+//   //   .addEventListener("click", removePrefect(studentPrefect));
+//   // document
+//   //   .querySelector("#removePrefectB")
+//   //   .addEventListener("click", removePrefect(studentPrefect));
+//   // removePrefect(studentPrefectA);
+// }
 //TODO: do the same for 'that' button, so that element 1 gets replaced with another student
-function removePrefect(studentPrefect) {
+function removePrefectA(studentPrefect) {
   if (studentPrefect.firstName !== prefectArray[0].firstName) {
     prefectArray[0].prefect = false; // set element prefect 1 to be bool false, in order to replace [0] with newly added student.Prefect
     studentPrefect.prefect = true;
     console.log(prefectArray[0], "im false");
+    prefectArray.shift(studentPrefect);
+    prefectArray.unshift(studentPrefect);
+  }
+  console.log("remove a prefect yes");
+  document.querySelector(".PrefectBoolText").textContent = "Yes";
+
+  console.log(prefectArray);
+}
+//TODO: do the same for 'that' button, so that element 1 gets replaced with another student
+function removePrefectB(studentPrefect) {
+  if (studentPrefect.firstName !== prefectArray[1].firstName) {
+    prefectArray[1].prefect = false; // set element prefect 1 to be bool false, in order to replace [0] with newly added student.Prefect
+    studentPrefect.prefect = true;
+    console.log(prefectArray[1], "im false");
     prefectArray.shift(studentPrefect);
     prefectArray.unshift(studentPrefect);
   }
@@ -507,5 +535,5 @@ function togglePrefect(studentPrefect) {
   console.log("Truthy");
   prefectArray.unshift(studentPrefect);
   console.log(prefectArray);
-  document.querySelector(".isPrefect").textContent += "Yes";
+  document.querySelector(".PrefectBoolText").textContent += "Yes";
 }
