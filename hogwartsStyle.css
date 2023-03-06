@@ -106,11 +106,11 @@ margin: 0px 10px 0px 10px;
 .main_list.studentList p{
   width: 300px;
  cursor: pointer;
- color: #ff00fb;
+ color:#111111;
 }
 li {
   font-family: cursive;
-  color:#ff00fb;
+  color:#111111;
   list-style: none;
   align-self: center;
 }
