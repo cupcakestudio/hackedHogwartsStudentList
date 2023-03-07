@@ -329,6 +329,9 @@ function displayStudentList(list) {
     const bloodStatusImgDisplay = studentListClone.querySelector(
       `.bloodStatusImgDisplay`
     );
+    const prefectIconImgDisplay = studentListClone.querySelector(
+      ".prefectIconImgDisplay"
+    );
     //bad workaround for only one name
     if (studentListed.firstName === "Leanne") {
       nameDisplay.textContent = `${studentListed.firstName}`;
@@ -358,6 +361,19 @@ function displayStudentList(list) {
       bloodStatusImgDisplay.src = `picture_materials/Muggle_icon.svg`;
     }
 
+    if (filterActive.value === "Prefects") {
+      bloodStatusImgDisplay.src = ``;
+      if (studentListed.house === "Gryffindor") {
+        prefectIconImgDisplay.src = `picture_materials/Gryffindor_emblem.svg`;
+        // houseEmblem.src = "picture_materials/halfBlood_icon.svg";
+      } else if (studentListed.house === "Slytherin") {
+        prefectIconImgDisplay.src = `picture_materials/Slytherin_emblem.svg`;
+      } else if (studentListed.house === "Hufflepuff") {
+        prefectIconImgDisplay.src = `picture_materials/Hufflepuff_emblem.svg`;
+      } else {
+        prefectIconImgDisplay.src = `picture_materials/Ravenclaw_emblem.svg`;
+      }
+    }
     //DETAILS POPOP
     function detailsPopop() {
       console.log("i have beenclicked");
@@ -439,7 +455,7 @@ function displayStudentList(list) {
 
       if (studentListed.prefect) {
         console.log("Im a prefect");
-        detailsList.querySelector(".PrefectBoolText").textContent = "Yes";
+
         if (studentListed.house === "Gryffindor") {
           detailsList.querySelector(
             ".prefectIcon"
@@ -461,7 +477,6 @@ function displayStudentList(list) {
           ).src = `picture_materials/Rave_prefect.svg`;
         }
       } else {
-        detailsList.querySelector(".PrefectBoolText").textContent = "";
         detailsList.querySelector(".prefectIcon").src = ``;
       }
 
@@ -649,7 +664,10 @@ function gryfremovePrefectA(studentPrefect) {
     gryfPrefectArray.unshift(studentPrefect);
   }
   console.log("remove a prefect yes");
-  document.querySelector(".PrefectBoolText").textContent = "Yes";
+
+  document.querySelector(
+    ".prefectIcon"
+  ).src = `picture_materials/Gryf_prefect.svg`;
 
   console.log(gryfPrefectArray);
 }
@@ -663,8 +681,9 @@ function gryfremovePrefectB(studentPrefect) {
     gryfPrefectArray.unshift(studentPrefect);
   }
   console.log("remove a prefect yes");
-  document.querySelector(".PrefectBoolText").textContent = "Yes";
-
+  document.querySelector(
+    ".prefectIcon"
+  ).src = `picture_materials/Gryf_prefect.svg`;
   console.log(gryfPrefectArray);
 }
 
@@ -672,7 +691,7 @@ function gryftogglePrefect(studentPrefect) {
   console.log("Truthy");
   gryfPrefectArray.unshift(studentPrefect);
   console.log(gryfPrefectArray);
-  document.querySelector(".PrefectBoolText").textContent += "Yes";
+
   document.querySelector(
     ".prefectIcon"
   ).src = `picture_materials/Gryf_prefect.svg`;
@@ -688,7 +707,9 @@ function slytremovePrefectA(studentPrefect) {
     slytPrefectArray.unshift(studentPrefect);
   }
   console.log("remove a prefect yes");
-  document.querySelector(".PrefectBoolText").textContent = "Yes";
+  document.querySelector(
+    ".prefectIcon"
+  ).src = `picture_materials/Slyt_prefect.svg`;
 
   console.log(slytPrefectArray);
 }
@@ -701,7 +722,9 @@ function slytremovePrefectB(studentPrefect) {
     slytPrefectArray.unshift(studentPrefect);
   }
   console.log("remove a prefect yes");
-  document.querySelector(".PrefectBoolText").textContent = "Yes";
+  document.querySelector(
+    ".prefectIcon"
+  ).src = `picture_materials/Slyt_prefect.svg`;
 
   console.log(slytPrefectArray);
 }
@@ -710,7 +733,7 @@ function slyttogglePrefect(studentPrefect) {
   console.log("Truthy");
   slytPrefectArray.unshift(studentPrefect);
   console.log(slytPrefectArray);
-  document.querySelector(".PrefectBoolText").textContent += "Yes";
+
   document.querySelector(
     ".prefectIcon"
   ).src = `picture_materials/Slyt_prefect.svg`;
@@ -726,7 +749,9 @@ function huffremovePrefectA(studentPrefect) {
     huffPrefectArray.unshift(studentPrefect);
   }
   console.log("remove a prefect yes");
-  document.querySelector(".PrefectBoolText").textContent = "Yes";
+  document.querySelector(
+    ".prefectIcon"
+  ).src = `picture_materials/Huff_prefect.svg`;
 
   console.log(huffPrefectArray);
 }
@@ -739,7 +764,9 @@ function huffremovePrefectB(studentPrefect) {
     huffPrefectArray.unshift(studentPrefect);
   }
   console.log("remove a prefect yes");
-  document.querySelector(".PrefectBoolText").textContent = "Yes";
+  document.querySelector(
+    ".prefectIcon"
+  ).src = `picture_materials/Huff_prefect.svg`;
 
   console.log(huffPrefectArray);
 }
@@ -748,7 +775,7 @@ function hufftogglePrefect(studentPrefect) {
   console.log("Truthy");
   huffPrefectArray.unshift(studentPrefect);
   console.log(huffPrefectArray);
-  document.querySelector(".PrefectBoolText").textContent += "Yes";
+
   document.querySelector(
     ".prefectIcon"
   ).src = `picture_materials/Huff_prefect.svg`;
@@ -763,7 +790,9 @@ function raveremovePrefectA(studentPrefect) {
     ravePrefectArray.unshift(studentPrefect);
   }
   console.log("remove a prefect yes");
-  document.querySelector(".PrefectBoolText").textContent = "Yes";
+  document.querySelector(
+    ".prefectIcon"
+  ).src = `picture_materials/Rave_prefect.svg`;
 
   console.log(ravePrefectArray);
 }
@@ -776,7 +805,9 @@ function raveremovePrefectB(studentPrefect) {
     ravePrefectArray.unshift(studentPrefect);
   }
   console.log("remove a prefect yes");
-  document.querySelector(".PrefectBoolText").textContent = "Yes";
+  document.querySelector(
+    ".prefectIcon"
+  ).src = `picture_materials/Rave_prefect.svg`;
 
   console.log(ravePrefectArray);
 }
@@ -785,7 +816,7 @@ function ravetogglePrefect(studentPrefect) {
   console.log("Truthy");
   ravePrefectArray.unshift(studentPrefect);
   console.log(ravePrefectArray);
-  document.querySelector(".PrefectBoolText").textContent += "Yes";
+
   document.querySelector(
     ".prefectIcon"
   ).src = `picture_materials/Rave_prefect.svg`;

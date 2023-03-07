@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="hogwartsStyle.css" />
   </head>
   <body>
-    <header><h1>Hogwarts Student List</h1></header>
+    <header>
+      <a id="TitelLine" href="hackedHogwarts.html"
+        ><h1>Hogwarts Student List</h1></a
+      >
+    </header>
 
     <nav class="buttons_and_dropdown">
       <select id="filtering">
@@ -43,6 +47,7 @@
       </div>
       <div id="HhouseCrest">
         <img src="picture_materials/Hufflepuff_emblem.svg" />
+
         <p>Hardworking, loyal and trustworthy</p>
       </div>
       <div id="RhouseCrest">
@@ -60,6 +65,7 @@
           ><div class="studentListed">
             <p></p>
             <img class="bloodStatusImgDisplay" />
+            <img class="prefectIconImgDisplay" />
           </div>
         </template>
       </div>
@@ -77,8 +83,21 @@
         <li class="bloodtype"></li>
         <img class="bloodStatusImg" />
       </div>
-      <li class="isPrefect"></li>
+      <div class="prefectFlex">
+        <li class="isPrefect"></li>
+
+        <img class="prefectIcon" />
+      </div>
+      <button class="makePrefect">Make Prefect</button>
+
       <li class="isSquad"></li>
+    </section>
+    <section class="removePrefect hide">
+      Choose one to replace:
+      <div class="buttonContainer">
+        <button id="removePrefectA"></button>
+        <button id="removePrefectB"></button>
+      </div>
     </section>
     <footer></footer>
   </body>

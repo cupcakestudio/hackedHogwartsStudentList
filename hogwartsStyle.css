@@ -13,12 +13,14 @@ flex-direction: row;
 justify-content: center;
 background-color: var(--paper);
 }
+#TitelLine {
+   text-decoration: none;
+}
 h1 {display: flex;
   flex-direction: row;
   justify-content: center;
-  text-decoration: none;
-    color: #000000
-  }
+ 
+    color: #000000}
 
 #houseBanner, h3 {
   display: grid;
@@ -57,7 +59,9 @@ margin: 0px 10px 0px 10px;
   height: 70vh;
   background-color: var(--paper);
   }
- div.hide {display: none;}
+
+.hide {display: none;}  
+ /* div.hide {display: none;} */
 
 #GhouseCrest, #ShouseCrest, #HhouseCrest, #RhouseCrest {
   display: grid; justify-content: space-evenly; 
@@ -96,7 +100,7 @@ margin: 0px 10px 0px 10px;
 
  p {
   font-family: cursive;
-  color:#ff2400;
+  color:#111111;
 }
 
 
@@ -110,7 +114,6 @@ margin: 0px 10px 0px 10px;
 .main_list.studentList p{
   width: 300px;
  cursor: pointer;
- color:#111111;
 }
 li {
   font-family: cursive;
@@ -142,8 +145,8 @@ li {
   
   /* change background color acc. to student's house */
    background-color: var(--paper);
-/*    
-   border-left: 100px solid transparent;
+  
+ /*  border-left: 100px solid transparent;
    border-right: 100px solid red;
    border-bottom: 100px solid transparent;
    border-top: 100px solid transparent; */
@@ -155,19 +158,47 @@ li {
    justify-self: start;
 }
  
+ .details > .makePrefect {
+  border: 1px solid var(--gryfGold);
+   background-color: var(--paper);
+   justify-self: start;
+   cursor: pointer;
+}
+ 
 
 
 
 /*bloodstatus*/
 /*bloodDisplayIcon */
-.studentListed, .bloodDetailsFlex, .houseDetailsFlex {
+.studentListed, .bloodDetailsFlex, .houseDetailsFlex, .prefectFlex {
  display: flex;
 }
-.studentListed > .bloodStatusImgDisplay , .bloodDetailsFlex > .bloodStatusImg, .houseDetailsFlex > .houseEmblem{
+.studentListed > .bloodStatusImgDisplay ,
+.studentListed > .prefectIconImgDisplay,
+.bloodDetailsFlex > .bloodStatusImg,
+.houseDetailsFlex > .houseEmblem, 
+.prefectFlex > .prefectIcon{
   margin-left: auto;
 max-width: 50px;
 }
 
+/*REMOVE PREFECTS*/
+section.removePrefect {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  border: 5px solid black;
+  z-index: 1;
+  background-color: var(--paper);
+}
+section.removePrefect.hide {
+  display: none;
+}
+.makePrefect>button{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
 /*COLORS*
 /* Color Theme Swatches in Hex */
 :root {
