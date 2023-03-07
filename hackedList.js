@@ -7,6 +7,9 @@ const Student = {
   middleName: "undefined",
   nickName: "null",
   house: "",
+  //added properties to student object
+  isSquadMember: false,
+  expelled: false,
 };
 
 //filter dropdown menu
@@ -308,9 +311,9 @@ function displayStudentList(list) {
   } else if (filterActive.value === "Prefects") {
     banner.src = "picture_materials/prefectBanner.svg";
   } else if (filterActive.value === "Inquisitor Squad") {
-    banner.src = "";
+    banner.src = "picture_materials/prefectBanner.svg";
   } else if (filterActive.value === "Expelled") {
-    banner.src = "";
+    banner.src = "picture_materials/prefectBanner.svg";
   } else {
     document.querySelector("#GhouseCrest").classList.remove("hide");
     document.querySelector("#ShouseCrest").classList.remove("hide");
@@ -334,7 +337,7 @@ function displayStudentList(list) {
     );
     //bad workaround for only one name
     if (studentListed.firstName === "Leanne") {
-      nameDisplay.textContent = `${studentListed.firstName}`;
+      nameDisplay.textContent = `${studentListed.firstName}` + ` -`;
     }
     //if they have a nickname instead of middlename
     else if (
@@ -445,13 +448,11 @@ function displayStudentList(list) {
       } else {
         bloodIcon.src = `picture_materials/Muggle_icon.svg`;
       }
-      //TODO: TOGGLE PREFECTS AND EXPEL STUDENTS - make funcitonality and activity diagram
+      //TOGGLE PREFECTS make activity diagram
       detailsList.querySelector(".isPrefect").textContent = "Prefect: ";
       detailsList
         .querySelector(".makePrefect")
         .addEventListener("click", () => clickPrefect(studentListed));
-
-      // (studentListed) => studentListed.includes("girl");
 
       if (studentListed.prefect) {
         console.log("Im a prefect");
@@ -471,7 +472,7 @@ function displayStudentList(list) {
             ".prefectIcon"
           ).src = `picture_materials/Huff_prefect.svg`;
         }
-        if (studentListed.house === "Hufflepuff") {
+        if (studentListed.house === "Ravenclaw") {
           detailsList.querySelector(
             ".prefectIcon"
           ).src = `picture_materials/Rave_prefect.svg`;
@@ -479,7 +480,18 @@ function displayStudentList(list) {
       } else {
         detailsList.querySelector(".prefectIcon").src = ``;
       }
-
+      // TOGGLE INQUISITORIAL SQUAD:
+      detailsList.querySelector(".isSquad").textContent =
+        "Inquisitorial Squad: ";
+      detailsList
+        .querySelector(".makeSquad")
+        .addEventListener("click", () => clickSquadMember(studentListed));
+      if (studentListed.isSquadMember) {
+        detailsList.querySelector("#squadM").textContent += "yes";
+      } else {
+        detailsList.querySelector(".isSquad").textContent += "";
+        detailsList.querySelector("#squadM").textContent = "";
+      }
       //CLOSE DETAILS
       detailsList
         .querySelector("#close")
@@ -556,6 +568,7 @@ function clickPrefect(studentListed) {
     } else if (!studentListed.prefect && gryfPrefectArray.length < 2) {
       studentListed.prefect = true;
       // detailsList.querySelector(".isPrefect").textContent += "Yes";
+      document.querySelector(".removePrefect").classList.add("hide");
       gryftogglePrefect(studentListed);
     }
   }
@@ -586,6 +599,7 @@ function clickPrefect(studentListed) {
       console.log("removed has been clicked");
     } else if (!studentListed.prefect && slytPrefectArray.length < 2) {
       studentListed.prefect = true;
+      document.querySelector(".removePrefect").classList.add("hide");
       // detailsList.querySelector(".isPrefect").textContent += "Yes";
       slyttogglePrefect(studentListed);
     }
@@ -617,6 +631,7 @@ function clickPrefect(studentListed) {
       console.log("removed has been clicked");
     } else if (!studentListed.prefect && huffPrefectArray.length < 2) {
       studentListed.prefect = true;
+      document.querySelector(".removePrefect").classList.add("hide");
       // detailsList.querySelector(".isPrefect").textContent += "Yes";
       hufftogglePrefect(studentListed);
     }
@@ -648,13 +663,14 @@ function clickPrefect(studentListed) {
       console.log("removed has been clicked");
     } else if (!studentListed.prefect && ravePrefectArray.length < 2) {
       studentListed.prefect = true;
+      document.querySelector(".removePrefect").classList.add("hide");
       // detailsList.querySelector(".isPrefect").textContent += "Yes";
       ravetogglePrefect(studentListed);
     }
   }
 }
 
-//GRYFFINDOR PREFECTS FUNCTIONS ADD AND REMOVE
+//GRYFFINDOR PREFECTS FUNCTIONS ADD AND REMOVE - bad implementation
 function gryfremovePrefectA(studentPrefect) {
   if (studentPrefect.firstName !== gryfPrefectArray[0].firstName) {
     gryfPrefectArray[0].prefect = false; // set element prefect 1 to be bool false, in order to replace [0] with newly added student.Prefect
@@ -696,7 +712,7 @@ function gryftogglePrefect(studentPrefect) {
     ".prefectIcon"
   ).src = `picture_materials/Gryf_prefect.svg`;
 }
-//SLYTHERIN PREFECTS FUNCTIONS ADD AND REMOVE
+//SLYTHERIN PREFECTS FUNCTIONS ADD AND REMOVE - bad implementation
 
 function slytremovePrefectA(studentPrefect) {
   if (studentPrefect.firstName !== slytPrefectArray[0].firstName) {
@@ -739,7 +755,7 @@ function slyttogglePrefect(studentPrefect) {
   ).src = `picture_materials/Slyt_prefect.svg`;
 }
 
-//HUFFLEPUFF PREFECT ADD AND REMOVE
+//HUFFLEPUFF PREFECT ADD AND REMOVE - bad implementation
 function huffremovePrefectA(studentPrefect) {
   if (studentPrefect.firstName !== huffPrefectArray[0].firstName) {
     huffPrefectArray[0].prefect = false; // set element prefect 1 to be bool false, in order to replace [0] with newly added student.Prefect
@@ -780,7 +796,7 @@ function hufftogglePrefect(studentPrefect) {
     ".prefectIcon"
   ).src = `picture_materials/Huff_prefect.svg`;
 }
-//RAVENCLAW PREFECT ADD AND REMOVE
+//RAVENCLAW PREFECT ADD AND REMOVE - bad implementation
 function raveremovePrefectA(studentPrefect) {
   if (studentPrefect.firstName !== ravePrefectArray[0].firstName) {
     ravePrefectArray[0].prefect = false; // set element prefect 1 to be bool false, in order to replace [0] with newly added student.Prefect
@@ -820,4 +836,26 @@ function ravetogglePrefect(studentPrefect) {
   document.querySelector(
     ".prefectIcon"
   ).src = `picture_materials/Rave_prefect.svg`;
+}
+
+//INQ SQUAD
+function clickSquadMember(studentListed) {
+  if (studentListed.house === "Slytherin" || studentListed.isPure) {
+    document.querySelector(".notSquadMember").classList.add("hide");
+    studentListed.isSquadMember = true;
+    document.querySelector("#squadM").textContent = "yes";
+    console.log("popop not shown");
+    console.log("Squad squad", studentListed, studentListed.isPure);
+  } else {
+    console.log(studentListed.house);
+    document.querySelector("#squadM").textContent = "";
+    document.querySelector(".notSquadMember").classList.remove("hide");
+    console.log("popop shown");
+    document
+      .querySelector(".notSquadMember button")
+      .addEventListener("click", () => {
+        document.querySelector(".notSquadMember").classList.add("hide");
+        console.log("popop hidden");
+      });
+  }
 }
