@@ -89,16 +89,32 @@
         <img class="prefectIcon" />
       </div>
       <button class="makePrefect">Make Prefect</button>
-
-      <li class="isSquad"></li>
+      <div class="squadFlex">
+        <li class="isSquad"></li>
+        <p id="squadM"></p>
+        <img class="squadIcon" />
+      </div>
+      <button class="makeSquad">Make Member</button>
+      <button class="removeSquad hide">Remove Member</button>
+      <div class="expelledStudentFlex">
+        <p id="isExpelled"></p>
+      </div>
+      <button class="expellingStudent">Expell Student</button>
     </section>
-    <section class="removePrefect hide">
+    <div class="notSquadMember hide">
+      <p>
+        This student cannot be a member! Choose a pure-blood student or someone
+        from Slytherin house
+      </p>
+      <button id="close">X</button>
+    </div>
+    <div class="removePrefect hide">
       Choose one to replace:
       <div class="buttonContainer">
         <button id="removePrefectA"></button>
         <button id="removePrefectB"></button>
       </div>
-    </section>
+    </div>
     <footer></footer>
   </body>
   <script src="hackedList.js"></script>
