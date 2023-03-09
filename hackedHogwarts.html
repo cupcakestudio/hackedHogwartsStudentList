@@ -70,7 +70,7 @@
         </template>
       </div>
     </div>
-    <section class="details">
+    <section class="details hide">
       <button id="close">X</button>
       <img />
 
@@ -88,25 +88,29 @@
 
         <img class="prefectIcon" />
       </div>
-      <button class="makePrefect">Make Prefect</button>
+
       <div class="squadFlex">
         <li class="isSquad"></li>
-        <p id="squadM"></p>
+
         <img class="squadIcon" />
       </div>
-      <button class="makeSquad">Make Member</button>
-      <button class="removeSquad hide">Remove Member</button>
+
       <div class="expelledStudentFlex">
         <p id="isExpelled"></p>
       </div>
-      <button class="expellingStudent">Expell Student</button>
+      <div class="preferenceBtnFeatures">
+        <button class="makePrefect">Make Prefect</button>
+        <button class="makeSquad" id="setMember">Make Member</button>
+        <button class="removeSquad hide">Remove Member</button>
+        <button class="expellingStudent hide">Expell Student</button>
+      </div>
     </section>
     <div class="notSquadMember hide">
+      <button id="close">X</button>
       <p>
         This student cannot be a member! Choose a pure-blood student or someone
         from Slytherin house
       </p>
-      <button id="close">X</button>
     </div>
     <div class="removePrefect hide">
       Choose one to replace:

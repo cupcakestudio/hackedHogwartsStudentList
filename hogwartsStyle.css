@@ -103,7 +103,7 @@ margin: 0px 10px 0px 10px;
   font-family: cursive;
   color:#111111;
 }
-
+#isExpelled { font-weight: bold;}
 
 .main_list.studentList > p{
   display: flex;
@@ -136,7 +136,7 @@ li {
   }
 
  .details {
-  display: none;
+  display: grid;
   margin-top: 20px;
   border: 5px solid black;
   
@@ -146,20 +146,21 @@ li {
   
   /* change background color acc. to student's house */
    background-color: var(--paper);
-  
- /*  border-left: 100px solid transparent;
-   border-right: 100px solid red;
-   border-bottom: 100px solid transparent;
-   border-top: 100px solid transparent; */
+
+}
+ .details.hide {
+  display: none;
+
 }
 .details > img{  justify-self: center;}
- .details > button {
+
+ .details > button, .notSquadMember >button {
   border: none;
    background-color: var(--paper);
    justify-self: start;
 }
  
- .details > .makePrefect {
+ .details > .makePrefect{
   border: 1px solid var(--gryfGold);
    background-color: var(--paper);
    justify-self: start;
@@ -171,20 +172,45 @@ li {
 
 /*bloodstatus*/
 /*bloodDisplayIcon */
-.studentListed, .bloodDetailsFlex, .houseDetailsFlex, .prefectFlex {
+.studentListed, .bloodDetailsFlex, .houseDetailsFlex, .prefectFlex, .expelledStudentFlex ,.squadFlex{
  display: flex;
 }
 .studentListed > .bloodStatusImgDisplay ,
 .studentListed > .prefectIconImgDisplay,
 .bloodDetailsFlex > .bloodStatusImg,
 .houseDetailsFlex > .houseEmblem, 
-.prefectFlex > .prefectIcon{
+.prefectFlex > .prefectIcon,
+.squadFlex > .squadIcon{
   margin-left: auto;
 max-width: 50px;
 }
 
 /*REMOVE PREFECTS*/
-section.removePrefect {
+.removePrefect {
+  position: fixed;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  border: 5px solid black;
+  z-index: 1;
+  background-color: var(--paper);
+  left: 20%;
+  align-items: center;
+}
+.removePrefect .buttonContainer {
+  margin-top: 20px;
+}
+.removePrefect.hide ,.notSquadMember.hide, .removeSquad.hide , .makeSquad.hide, .expellingStudent.hide{
+  display: none;
+}
+
+
+/*INQ SQUAD PREVENT POPOP*/
+.notSquadMember {
+  position: fixed;
+  top: 50%;
+  left: 20%;
   display: flex;
   flex-direction: column;
   margin-top: 20px;
@@ -192,13 +218,79 @@ section.removePrefect {
   z-index: 1;
   background-color: var(--paper);
 }
-section.removePrefect.hide {
-  display: none;
-}
-.makePrefect>button{
+ .notSquadMember >button {
+  align-self: start;
+  
+  background-color: orchid;
+ }
+
+/* BUTTON FOR PREFERENCES/RESPONSIBILITES/FEATURES */
+.preferenceBtnFeatures {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  justify-content: space-evenly;
+}
+.preferenceBtnFeatures button { 
+  background-color: var(--paper);
+  border: 1px solid var(--gryfGold);
+    cursor: pointer;
+}
+@media screen and (max-width: 400px){
+  * {margin: 0 auto}
+  .main_list {
+  grid-template-columns: repeat(2,1fr);
+  margin: 0 auto
+  }
+  .main_list.studentList{
+    grid-template-columns: 1fr;
+  }
+  .main_list.studentList>div {
+    grid-column: 1;
+  }
+  /* .main_list div> p {
+    display: none;
+  } */   
+  .buttons_and_dropdown{
+    flex-direction: column;
+    gap: 8px
+  }
+  #GhouseCrest img + p {
+    grid-area: 1;
+  }
+  #GhouseCrest > img{
+    width: 100%;
+  }
+  #GhouseCrest > p{
+   position: relative;
+   
+  }
+  /* .main_list #GhouseCrest > p, .main_list #ShouseCrest > p, .main_list #HhouseCrest > p, .main_list #RhouseCrest > p {
+    
+  } */
+  .main_list.studentList > section {
+    grid-column: 1;
+      }
+  .details.modal {
+    position: fixed;
+    left: 22px;
+    top: 40px;
+    z-index: 2;
+  margin: auto;
+  padding: 0;
+ 
+  width: 80%;
+  grid-column: 2;
+    display: grid;
+    justify-items: center;
+    padding: 2px 16px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  animation-name: animatetop;
+  animation-duration: 0.4s
+  }
+  @keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
 }
 /*COLORS*
 /* Color Theme Swatches in Hex */
