@@ -51,6 +51,7 @@ margin: 0px 10px 0px 10px;
 /*FOR STUDENT LIST TO BE DISPLAYED*/
 .main_list.studentList > div{
   grid-column: 2;
+  grid-row: 1;
   height: max-content; 
   }
 .main_list > div{

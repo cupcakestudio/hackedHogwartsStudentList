@@ -595,6 +595,8 @@ function displayStudentList(list) {
 //EXPELLING A STUDENT
 function expelAStudent(studentListed) {
   if (!studentListed.expelled) {
+    //close the details popop when student has been removed from list
+    document.querySelector(".details").style.display = "none";
     studentListed.expelled = true;
     console.log(studentListed.expelled);
     expelledArray.push(studentListed);
@@ -610,6 +612,7 @@ function expelAStudent(studentListed) {
     );
     console.log(expelledArray, expelledArray.length);
     console.log(allStudents, allStudents.length);
+
     displayList(getFilterSortSearchValues());
   }
 }
