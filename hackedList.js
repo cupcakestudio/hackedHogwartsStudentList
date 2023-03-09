@@ -618,23 +618,23 @@ function expelAStudent(studentListed) {
     studentListed.prefect = false;
     studentListed.isSquadMember = false;
     squadArray.pop(studentListed);
-    allStudents.shift(studentListed); //removed from non-expelled list
+    allStudents.pop(studentListed); //removed from non-expelled list
     console.log(studentListed.squadArray);
     studentListed.expelled = true;
     expelledArray.push(studentListed); //moved into expelled list
     console.log(studentListed.expelled);
-    // if (studentListed.house === "Gryffindor") {
-    //   gryfPrefectArray.pop(studentListed);
-    // }
-    // if (studentListed.house === "Slytherin") {
-    //   slytPrefectArray.pop(studentListed);
-    // }
-    // if (studentListed.house === "Hufflepuff") {
-    //   huffPrefectArray.pop(studentListed);
-    // }
-    // if (studentListed.house === "Ravenclaw") {
-    //   ravePrefectArray.pop(studentListed);
-    // }
+    if (studentListed.house === "Gryffindor") {
+      gryfPrefectArray.pop(studentListed);
+    }
+    if (studentListed.house === "Slytherin") {
+      slytPrefectArray.pop(studentListed);
+    }
+    if (studentListed.house === "Hufflepuff") {
+      huffPrefectArray.pop(studentListed);
+    }
+    if (studentListed.house === "Ravenclaw") {
+      ravePrefectArray.pop(studentListed);
+    }
     // document
     //   .querySelector(".expellingStudent")
     //   .removeEventListener("click", expelAStudent(studentListed));
