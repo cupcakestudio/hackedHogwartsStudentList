@@ -162,7 +162,7 @@ li {
    cursor: pointer;
 }
  
-
+.makePrefect.hide {display: none}
 
 
 /*bloodstatus*/
@@ -218,7 +218,10 @@ max-width: 50px;
   
   background-color: orchid;
  }
-
+.notSquadMember .spanIcons{
+  
+    width: 50px;
+}
 /* BUTTON FOR PREFERENCES/RESPONSIBILITES/FEATURES */
 .preferenceBtnFeatures {
   display: flex;
@@ -230,8 +233,9 @@ max-width: 50px;
   border: 1px solid var(--gryfGold);
     cursor: pointer;
 }
-/* @media screen and (max-width: 400px){
- {margin: 0 auto}
+
+ @media screen and (max-width: 400px){
+ *{margin: 0 auto}
   .main_list {
   grid-template-columns: repeat(2,1fr);
   margin: 0 auto
@@ -242,14 +246,14 @@ max-width: 50px;
   .main_list.studentList>div {
     grid-column: 1;
   }
-  /* .main_list div> p {
+   /* .main_list div> p {
     display: none;
-  }  
+  }   */
   .buttons_and_dropdown{
     flex-direction: column;
     gap: 8px
   }
-  #GhouseCrest img + p {
+  #GhouseCrest img + p, #ShouseCrest img + p {
     grid-area: 1;
   }
   #GhouseCrest > img{
@@ -259,9 +263,10 @@ max-width: 50px;
    position: relative;
    
   }
-  /* .main_list #GhouseCrest > p, .main_list #ShouseCrest > p, .main_list #HhouseCrest > p, .main_list #RhouseCrest > p {
-    
-  } 
+   /* .main_list #GhouseCrest > p, .main_list #ShouseCrest > p, .main_list #HhouseCrest > p, .main_list #RhouseCrest > p {
+    grid-area: 1;
+    position: relative;
+  }  */
   .main_list.studentList > section {
     grid-column: 1;
       }
