@@ -29,7 +29,7 @@ const huffPrefectArray = [];
 const ravePrefectArray = [];
 let squadArray = [];
 let expelledArray = [];
-
+let flag = false;
 // global var
 // let template = document.querySelector(".FilteredStudentList");
 let template = document.querySelector("#ListDisplay .FilteredStudentList");
@@ -391,7 +391,7 @@ function displayStudentList(list) {
     }
 
     //DETAILS POPOP
-    function detailsPopop(studentListed) {
+    function detailsPopop() {
       console.log(`${studentListed.firstName}"have beenclicked"`);
 
       const detailsList = document.querySelector(".details");
@@ -606,7 +606,7 @@ function displayStudentList(list) {
           detailsList.style.display = "none";
         };
       }
-
+      detailsList.querySelector("#close").classList.add("hide");
       //when filter gets changes also close the details popop
       filterActive.addEventListener("change", () =>
         detailsList.classList.add("hide")
@@ -614,16 +614,16 @@ function displayStudentList(list) {
 
       document.querySelector(".main_list").appendChild(detailsList);
     }
-    nameDisplay.addEventListener("click", removeOldClickedStudent);
+    nameDisplay.addEventListener("click", () => detailsPopop());
     //remove old listener?
 
     //append the student name to the listDisplay Container
     listToDisplay.appendChild(studentListClone);
-    function removeOldClickedStudent() {
-      detailsPopop(studentListed);
-      debugger;
-      nameDisplay.removeEventListener("click", removeOldClickedStudent);
-    }
+    // function removeOldClickedStudent() {
+    //   detailsPopop();
+    //   debugger;
+    //   nameDisplay.removeEventListener("click", removeOldClickedStudent);
+    // }
   });
 
   //interface display of information about the lists
@@ -658,6 +658,18 @@ function displayStudentList(list) {
 
 //EXPELLING A STUDENT
 function expelAStudent(studentListed) {
+  //this statement is only true when system is hacked
+  if (studentListed.firstName === "Ting" && studentListed.lastName === "Lin") {
+    document.querySelector(".expelMeNot").classList.remove("hide");
+
+    document.querySelector("#Confirm").onclick = function (event) {
+      if (event.target == document.querySelector("#Confirm")) {
+        document.querySelector(".expelMeNot").classList.add("hide");
+      }
+    };
+    studentListed.expelled = false;
+    return;
+  }
   if (!studentListed.expelled) {
     studentListed.prefect = false;
     studentListed.isSquadMember = false;
@@ -670,18 +682,18 @@ function expelAStudent(studentListed) {
     //close the details popop when student has been removed from list
     document.querySelector(".details").classList.add("hide");
 
-    // if (studentListed.house === "Gryffindor") {
-    //   gryfPrefectArray.pop(studentListed);
-    // }
-    // if (studentListed.house === "Slytherin") {
-    //   slytPrefectArray.pop(studentListed);
-    // }
-    // if (studentListed.house === "Hufflepuff") {
-    //   huffPrefectArray.pop(studentListed);
-    // }
-    // if (studentListed.house === "Ravenclaw") {
-    //   ravePrefectArray.pop(studentListed);
-    // }
+    if (studentListed.house === "Gryffindor") {
+      gryfPrefectArray.pop(studentListed);
+    }
+    if (studentListed.house === "Slytherin") {
+      slytPrefectArray.pop(studentListed);
+    }
+    if (studentListed.house === "Hufflepuff") {
+      huffPrefectArray.pop(studentListed);
+    }
+    if (studentListed.house === "Ravenclaw") {
+      ravePrefectArray.pop(studentListed);
+    }
     // document
     //   .querySelector(".expellingStudent")
     //   .removeEventListener("click", expelAStudent(studentListed));
@@ -708,7 +720,6 @@ function expelAStudent(studentListed) {
     displayList(getFilterSortSearchValues());
   }
 }
-
 //ADDING OR REMOVING PREFECTS IN PREFECT ARRAY, BAD IMPLEMENTATION OF THIS FEATURE
 function clickPrefect(studentListed) {
   if (studentListed.house === "Gryffindor") {
@@ -1032,7 +1043,10 @@ function clickSquadMember(studentListed) {
     // document.querySelector(".removeSquad").style.filter = "grayscale(1)";
     console.log("popop not shown");
     console.log("Squad squad", studentListed, studentListed.isPure);
-
+    if (flag) {
+      //call the removeSquadMemeber function to remove the  squad member after 2s
+      setTimeout(() => removeSquadMember(studentListed), 2000);
+    }
     displayList(getFilterSortSearchValues());
   } else {
     console.log(studentListed.house);
@@ -1081,5 +1095,81 @@ function removeSquadMember(studentListed) {
     squadArray.shift(studentListed);
     console.log(squadArray);
     document.querySelector(".squadIcon").src = ``;
+  }
+
+  document.querySelector(".notify").classList.remove("hide");
+  document.querySelector(
+    ".notify p"
+  ).textContent = `${studentListed.firstName} ${studentListed.lastName} is no longer a member of the Inquisitor Squad`;
+  document.querySelector("#ConfirmMessage").onclick = function (event) {
+    if (event.target == document.querySelector("#ConfirmMessage")) {
+      document.querySelector(".notify").classList.add("hide");
+    }
+  };
+}
+let hackInput = ""; // var to keep count of hacked keystroke
+//add listener on keydown on document.
+document.addEventListener("keydown", function (evt) {
+  hackInput += evt.key.toLowerCase(); // when a key is pressed, that is the event (evt), add that key to string of input (all lowercase)
+  //check if input matches/endsWith desired secret hacking word
+  if (hackInput.endsWith("hack")) {
+    hackTheSystem();
+    hackInput = "";
+  }
+});
+//HACKING FUNCTION
+
+function hackTheSystem() {
+  if (flag) {
+    //this flag condition prevents the system from scrambling the data more than once.
+    return;
+  }
+  flag = true;
+  //create me as an object w/ Student properties.
+  const meObject = {
+    firstName: "Ting",
+    lastName: "Lin",
+    middleName: "Hua",
+    gender: "girl",
+    house: "Slytherin",
+    prefect: false,
+    isSquadMember: false,
+    expelled: false,
+  };
+  //inject myself into allStudents list.
+  allStudents.push(meObject);
+
+  //change blood status
+  // const changeBloodStatusHalfMuggle;
+
+  allStudents.forEach((student) => {
+    if (student.isPure) {
+      generateBloodStatusRandom(student);
+    }
+    //set former half and muggle blood to be pure blood
+    else if (student.isHalf || student.isMuggle) {
+      student.isPure = true;
+      student.isHalf = false;
+      student.isMuggle = false;
+    }
+  });
+
+  function generateBloodStatusRandom(student) {
+    const changeBloodStatusPure = Math.floor(Math.random() * 3);
+    if (changeBloodStatusPure === 0) {
+      /*set all three possible bloodstatus to be either true or false, based on number generated
+      if student's former status is pure */
+      student.isPure = true;
+      student.isHalf = false;
+      student.isMuggle = false;
+    } else if (changeBloodStatusPure === 1) {
+      student.isPure = false;
+      student.isHalf = true;
+      student.isMuggle = false;
+    } else {
+      student.isPure = false;
+      student.isHalf = false;
+      student.isMuggle = true;
+    }
   }
 }

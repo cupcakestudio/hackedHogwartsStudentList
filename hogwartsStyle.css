@@ -154,7 +154,9 @@ li {
    background-color: var(--paper);
    justify-self: start;
 }
- 
+ .details > #close.hide {
+  display:none;
+ }
  .details > .makePrefect{
   border: 1px solid var(--gryfGold);
    background-color: var(--paper);
@@ -193,6 +195,7 @@ max-width: 50px;
   left: 20%;
   align-items: center;
 }
+
 .removePrefect .buttonContainer {
   margin-top: 20px;
 }
@@ -232,6 +235,32 @@ max-width: 50px;
   background-color: var(--paper);
   border: 1px solid var(--gryfGold);
     cursor: pointer;
+}
+.preferenceBtnFeatures.hide {
+  display: none;
+
+}
+
+.expelMeNot.hide, .notify.hide {
+  display: none;
+}
+.expelMeNot {
+  background-color: var(--paper);
+  border: 5px solid black;
+    cursor: pointer;
+    z-index: 3;
+    position: fixed;
+    top: 13vh;
+    left: 25vw;
+}
+.notify {
+  background-color: var(--paper);
+  border: 5px solid black;
+    cursor: pointer;
+    z-index: 3;
+    position: fixed;
+    top: 13vh;
+    left: 25vw;
 }
 
  @media screen and (max-width: 400px){
@@ -277,7 +306,6 @@ max-width: 50px;
     z-index: 2;
   margin: auto;
   padding: 0;
- 
   width: 80%;
   grid-column: 2;
     display: grid;
@@ -286,6 +314,15 @@ max-width: 50px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   animation-name: animatetop;
   animation-duration: 0.4s
+  }
+  .notSquadMember {
+    z-index: 3;
+    position: fixed;
+    left: 22px;
+    top: 50px;
+  }
+  .removePrefect {
+    z-index: 3
   }
   @keyframes animatetop {
   from {top: -300px; opacity: 0}
