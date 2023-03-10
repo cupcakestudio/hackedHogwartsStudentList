@@ -323,9 +323,9 @@ function displayStudentList(list) {
   } else if (filterActive.value === "Prefects") {
     banner.src = "picture_materials/prefectBanner.svg";
   } else if (filterActive.value === "Inquisitor Squad") {
-    banner.src = "picture_materials/prefectBanner.svg";
+    banner.src = "picture_materials/squadBanner.svg";
   } else if (filterActive.value === "Expelled") {
-    banner.src = "picture_materials/prefectBanner.svg";
+    banner.src = "picture_materials/expelledBanner.svg";
   } else {
     document.querySelector("#GhouseCrest").classList.remove("hide");
     document.querySelector("#ShouseCrest").classList.remove("hide");
@@ -407,7 +407,7 @@ function displayStudentList(list) {
       const houseEmblem = detailsList.querySelector(".houseEmblem");
       const bloodIcon = detailsList.querySelector(".bloodStatusImg");
       //details about the student data is loaded here
-      detailsList.style.display = "grid";
+      detailsList.classList.remove("hide");
       //theming the detailstList
       if (studentListed.house === "Gryffindor") {
         detailsList.style.backgroundColor = "var(--gryfRed)";
@@ -512,6 +512,9 @@ function displayStudentList(list) {
           ".squadIcon"
         ).src = `/picture_materials/Squad_icon.svg`;
         document.querySelector(".makeSquad").classList.add("hide");
+        //'resets'the styling of button
+        document.querySelector(".removeSquad").style.cursor = "pointer";
+        document.querySelector(".removeSquad").style.filter = "grayscale(0)";
         document.querySelector(".removeSquad").classList.remove("hide");
         // this eventlistener removes a student that is alreay a inq. squad member
         detailsList
@@ -569,9 +572,8 @@ function displayStudentList(list) {
         .querySelector("#close")
         .addEventListener("click", () => (detailsList.style.display = "none"));
       //when filter gets changes also close the details popop
-      filterActive.addEventListener(
-        "change",
-        () => (detailsList.style.display = "none")
+      filterActive.addEventListener("change", () =>
+        detailsList.classList.add("hide")
       );
 
       document.querySelector(".main_list").appendChild(detailsList);
@@ -594,17 +596,18 @@ function displayStudentList(list) {
     document.querySelector(
       ".info_list"
     ).textContent += ` Students in House: ${StudentListToDisplay.length}`;
-  } else if (
-    filterActive.value === "Prefects" ||
-    filterActive.value === "Expelled"
-  ) {
+  } else if (filterActive.value === "Prefects") {
     document.querySelector(
       ".info_list"
     ).textContent += ` Students in List: ${StudentListToDisplay.length}`;
+  } else if (filterActive.value === "Expelled") {
+    document.querySelector(
+      ".info_list"
+    ).textContent = ` Total of Students Expelled: ${expelledArray.length}`;
   } else {
     document.querySelector(
       ".info_list"
-    ).textContent = ` Total of Students: ${squadArray.length}`;
+    ).textContent = ` Total of Students: ${StudentListToDisplay.length}, Number in list: ${squadArray.length}`;
   }
   //append template student list to display in main_list container.
   return document.querySelector(".main_list").appendChild(listOverview);
@@ -618,7 +621,7 @@ function expelAStudent(studentListed) {
     studentListed.prefect = false;
     studentListed.isSquadMember = false;
     squadArray.pop(studentListed);
-    allStudents.pop(studentListed); //removed from non-expelled list
+    allStudents.shift(studentListed); //removed from non-expelled list
     console.log(studentListed.squadArray);
     studentListed.expelled = true;
     expelledArray.push(studentListed); //moved into expelled list
@@ -977,6 +980,8 @@ function clickSquadMember(studentListed) {
 
     document.querySelector(".makeSquad").classList.add("hide");
     document.querySelector(".removeSquad").classList.remove("hide");
+    document.querySelector(".removeSquad").style.cursor = "default";
+    document.querySelector(".removeSquad").style.filter = "grayscale(1)";
     console.log("popop not shown");
     console.log("Squad squad", studentListed, studentListed.isPure);
     // document
@@ -1012,6 +1017,7 @@ function removeSquadMember(studentListed) {
         studentNoMember.firstName !== studentListed.firstName &&
         studentNoMember.lastName !== studentListed.lastName
     );
+    document.querySelector(".details").classList.add("hide"); //hides the popop when removing a student
     console.log(squadArray);
     document.querySelector(".squadIcon").src = ``;
     document.querySelector(".makeSquad").textContent = "Make Member";
@@ -1020,13 +1026,18 @@ function removeSquadMember(studentListed) {
     // });
     displayList(getFilterSortSearchValues());
   }
-  if (studentListed.isSquadMember) {
+  if (
+    studentListed.isSquadMember &&
+    filterActive.value !== "Inquisitor Squad"
+  ) {
+    document.querySelector(".removeSquad").style.cursor = "default";
+    document.querySelector(".removeSquad").style.filter = "grayscale(1)";
     console.log("no squad member");
     studentListed.isSquadMember = false;
     squadArray.shift(studentListed);
     console.log(squadArray);
     document.querySelector(".squadIcon").src = ``;
-    document.querySelector(".makeSquad").classList.remove("hide");
-    document.querySelector(".removeSquad").classList.add("hide");
+    // document.querySelector(".makeSquad").classList.remove("hide");
+    // document.querySelector(".removeSquad").classList.add("hide");
   }
 }

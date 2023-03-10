@@ -141,17 +141,12 @@ li {
   border: 5px solid black;
   
   height: max-content;
-  background-color: var(--paper);
-  
-  
+  background-color: var(--paper); 
   /* change background color acc. to student's house */
    background-color: var(--paper);
-
 }
- .details.hide {
-  display: none;
+.details.hide{display:none}
 
-}
 .details > img{  justify-self: center;}
 
  .details > button, .notSquadMember >button {
@@ -235,8 +230,8 @@ max-width: 50px;
   border: 1px solid var(--gryfGold);
     cursor: pointer;
 }
-@media screen and (max-width: 400px){
-  * {margin: 0 auto}
+/* @media screen and (max-width: 400px){
+ {margin: 0 auto}
   .main_list {
   grid-template-columns: repeat(2,1fr);
   margin: 0 auto
@@ -249,7 +244,7 @@ max-width: 50px;
   }
   /* .main_list div> p {
     display: none;
-  } */   
+  }  
   .buttons_and_dropdown{
     flex-direction: column;
     gap: 8px
@@ -266,7 +261,7 @@ max-width: 50px;
   }
   /* .main_list #GhouseCrest > p, .main_list #ShouseCrest > p, .main_list #HhouseCrest > p, .main_list #RhouseCrest > p {
     
-  } */
+  } 
   .main_list.studentList > section {
     grid-column: 1;
       }
@@ -291,7 +286,7 @@ max-width: 50px;
   from {top: -300px; opacity: 0}
   to {top: 0; opacity: 1}
 }
-}
+} 
 /*COLORS*
 /* Color Theme Swatches in Hex */
 :root {
