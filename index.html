@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hacked Hogwarts Student List</title>
+    <link rel="stylesheet" href="hogwartsStyle.css" />
+  </head>
+  <body>
+    <header>
+      <a id="TitelLine" href="hackedHogwarts.html"
+        ><h1>Hogwarts Student List</h1></a
+      >
+    </header>
+
+    <nav class="buttons_and_dropdown">
+      <select id="filtering">
+        <option value="0">Select filter</option>
+        <option value="Gryffindor">House: Gryffindor</option>
+        <option value="Slytherin">House: Slytherin</option>
+        <option value="Hufflepuff">House: Hufflepuff</option>
+        <option value="Ravenclaw">House: Ravenclaw</option>
+        <option value="Prefects">Prefects</option>
+        <option value="Inquisitor Squad">Inquisitor Squad</option>
+        <option value="Expelled">Expelled Students</option>
+      </select>
+
+      <select id="sorting">
+        <option value="0">Select sorting</option>
+        <option value="Firstname">Firstname</option>
+        <option value="Lastname">Lastname</option>
+      </select>
+
+      <input type="search" placeholder="Search query here" id="search" />
+    </nav>
+    <div class="info_list"></div>
+    <main class="main_list">
+      <!-- house crests -->
+      <div id="GhouseCrest">
+        <img src="picture_materials/Gryffindor_emblem.svg" />
+        <p>Courageous, brave and determination</p>
+      </div>
+      <div id="ShouseCrest">
+        <img src="picture_materials/Slytherin_emblem.svg" />
+        <p>Cunning, resourceful and ambitious</p>
+      </div>
+      <div id="HhouseCrest">
+        <img src="picture_materials/Hufflepuff_emblem.svg" />
+
+        <p>Hardworking, loyal and trustworthy</p>
+      </div>
+      <div id="RhouseCrest">
+        <img src="picture_materials/Ravenclaw_emblem.svg" />
+        <p>Witty, creative and eccentric</p>
+      </div>
+    </main>
+    <!-- different lists -->
+    <div class="ListOverview">
+      <img id="houseBanner" />
+      <h3 class="StudentHeadline">Students:</h3>
+
+      <div id="ListDisplay">
+        <template class="FilteredStudentList"
+          ><div class="studentListed">
+            <p></p>
+            <img class="bloodStatusImgDisplay" />
+            <img class="prefectIconImgDisplay" />
+          </div>
+        </template>
+      </div>
+    </div>
+    <section class="details hide">
+      <button id="close">X</button>
+      <img />
+
+      <div class="houseDetailsFlex">
+        <li class="name"></li>
+        <!-- <p>House:</p> -->
+        <img class="houseEmblem" />
+      </div>
+      <div class="bloodDetailsFlex">
+        <li class="bloodtype"></li>
+        <img class="bloodStatusImg" />
+      </div>
+      <div class="prefectFlex">
+        <li class="isPrefect"></li>
+
+        <img class="prefectIcon" />
+      </div>
+
+      <div class="squadFlex">
+        <li class="isSquad"></li>
+
+        <img class="squadIcon" />
+      </div>
+
+      <div class="expelledStudentFlex">
+        <p id="isExpelled"></p>
+      </div>
+      <div class="preferenceBtnFeatures">
+        <button class="makePrefect">Make Prefect</button>
+        <button class="makeSquad" id="setMember">Make Member</button>
+        <button class="removeSquad hide">Remove Member</button>
+        <button class="expellingStudent">Expell Student</button>
+      </div>
+    </section>
+
+    <div class="notSquadMember hide">
+      <button id="close">X</button>
+      <p>
+        This student cannot be a member! Choose a pure-blood
+        <img
+          src="picture_materials/pureBlood_icon.svg"
+          class="spanIcons"
+        />student or someone from Slytherin<img
+          src="picture_materials/Slytherin_emblem.svg"
+          class="spanIcons"
+        />
+        house
+      </p>
+    </div>
+    <div class="removePrefect hide">
+      Choose one to replace:
+      <div class="buttonContainer">
+        <button id="removePrefectA"></button>
+        <button id="removePrefectB"></button>
+      </div>
+    </div>
+    <div class="expelMeNot hide">
+      <p>You may not expel this student! <br />- You know who.</p>
+      <button id="Confirm">Ok</button>
+    </div>
+    <div class="notify hide">
+      <p></p>
+      <button id="ConfirmMessage">Ok</button>
+    </div>
+    <footer></footer>
+  </body>
+  <script src="hackedList.js"></script>
+</html>
