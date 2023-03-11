@@ -614,16 +614,17 @@ function displayStudentList(list) {
 
       document.querySelector(".main_list").appendChild(detailsList);
     }
-    nameDisplay.addEventListener("click", () => detailsPopop());
+    nameDisplay.addEventListener("click", removeOldClickedStudent);
     //remove old listener?
 
     //append the student name to the listDisplay Container
     listToDisplay.appendChild(studentListClone);
-    // function removeOldClickedStudent() {
-    //   detailsPopop();
-    //   debugger;
-    //   nameDisplay.removeEventListener("click", removeOldClickedStudent);
-    // }
+
+    function removeOldClickedStudent() {
+      detailsPopop();
+      // debugger;
+      nameDisplay.removeEventListener("click", removeOldClickedStudent);
+    }
   });
 
   //interface display of information about the lists
@@ -723,7 +724,7 @@ function expelAStudent(studentListed) {
 //ADDING OR REMOVING PREFECTS IN PREFECT ARRAY, BAD IMPLEMENTATION OF THIS FEATURE
 function clickPrefect(studentListed) {
   if (studentListed.house === "Gryffindor") {
-    console.log(studentListed.house, studentListed);
+    // console.log(studentListed.house, studentListed);
     if (!studentListed.prefect && gryfPrefectArray.length === 2) {
       console.log("gryf students", gryfPrefectArray.length);
       document.querySelector(".removePrefect").classList.remove("hide");
@@ -748,6 +749,7 @@ function clickPrefect(studentListed) {
 
       console.log("removed has been clicked");
     } else if (!studentListed.prefect && gryfPrefectArray.length < 2) {
+      console.log(studentListed.firstName);
       studentListed.prefect = true;
       // detailsList.querySelector(".isPrefect").textContent += "Yes";
       document.querySelector(".removePrefect").classList.add("hide");
@@ -1095,17 +1097,19 @@ function removeSquadMember(studentListed) {
     squadArray.shift(studentListed);
     console.log(squadArray);
     document.querySelector(".squadIcon").src = ``;
+    document.querySelector(".notify").classList.add("hide");
+    return;
   }
 
-  document.querySelector(".notify").classList.remove("hide");
-  document.querySelector(
-    ".notify p"
-  ).textContent = `${studentListed.firstName} ${studentListed.lastName} is no longer a member of the Inquisitor Squad`;
-  document.querySelector("#ConfirmMessage").onclick = function (event) {
-    if (event.target == document.querySelector("#ConfirmMessage")) {
-      document.querySelector(".notify").classList.add("hide");
-    }
-  };
+  // document.querySelector(".notify").classList.remove("hide");
+  // document.querySelector(
+  //   ".notify p"
+  // ).textContent = `${studentListed.firstName} ${studentListed.lastName} is no longer a member of the Inquisitor Squad`;
+  // document.querySelector("#ConfirmMessage").onclick = function (event) {
+  //   if (event.target == document.querySelector("#ConfirmMessage")) {
+  //     document.querySelector(".notify").classList.add("hide");
+  //   }
+  // };
 }
 let hackInput = ""; // var to keep count of hacked keystroke
 //add listener on keydown on document.
