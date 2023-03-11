@@ -139,11 +139,17 @@ li {
   display: grid;
   margin-top: 20px;
   border: 5px solid black;
-  
   height: max-content;
   background-color: var(--paper); 
   /* change background color acc. to student's house */
    background-color: var(--paper);
+   position: fixed;
+   top: 10vh;
+   left: 30vw;
+   width: 50vw;
+   height: 100vh;
+   animation-name: animatetop;
+   animation-duration: 0.4s
 }
 .details.hide{display:none}
 
