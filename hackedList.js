@@ -505,7 +505,7 @@ function displayStudentList(list) {
       if (studentListed.isSquadMember) {
         document.querySelector(
           ".squadIcon"
-        ).src = `/picture_materials/Squad_icon.svg`;
+        ).src = `picture_materials/Squad_icon.svg`;
         document.querySelector(".makeSquad").classList.add("hide");
         document.querySelector(".removeSquad").classList.remove("hide");
         document.querySelector(".removeSquad").style.cursor = "pointer";
@@ -935,7 +935,7 @@ function clickSquadMember(studentListed) {
     squadArray.unshift(studentListed);
     document.querySelector(
       ".squadIcon"
-    ).src = `/picture_materials/Squad_icon.svg`;
+    ).src = `picture_materials/Squad_icon.svg`;
 
     document.querySelector(".makeSquad").classList.add("hide");
     document.querySelector(".removeSquad").classList.remove("hide");
