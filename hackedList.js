@@ -225,7 +225,6 @@ function prepareObjects(jsonData) {
 
     // read imagefile name based on their lastname in lower case to match
     let imageFile = student.lastName.toLowerCase();
-    // image.src = images.substring("images\\\\", "images\\\\".lastIndexOf("_"));
 
     //if image src has match with this pattern: lastname_firstLetter.png
     //using regex would be better...
