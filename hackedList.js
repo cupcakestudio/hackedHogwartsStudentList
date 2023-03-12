@@ -225,6 +225,7 @@ function prepareObjects(jsonData) {
 
     // read imagefile name based on their lastname in lower case to match
     let imageFile = student.lastName.toLowerCase();
+    // image.src = images.substring("images\\\\", "images\\\\".lastIndexOf("_"));
 
     //if image src has match with this pattern: lastname_firstLetter.png
     //using regex would be better...
@@ -374,7 +375,7 @@ function displayStudentList(list) {
     } else if (studentListed.isPure) {
       bloodStatusImgDisplay.src = `picture_materials/pureBlood_icon.svg`;
     } else {
-      bloodStatusImgDisplay.src = `picture_materials/muggle_icon.svg`;
+      bloodStatusImgDisplay.src = `picture_materials/Muggle_icon.svg`;
     }
 
     if (filterActive.value === "Prefects") {
@@ -399,7 +400,10 @@ function displayStudentList(list) {
       const bloodIcon = detailsList.querySelector(".bloodStatusImg");
       //details about the student data is loaded here
       detailsList.style.display = "grid";
-
+      document.querySelector(".preferenceBtnFeatures").classList.remove("hide");
+      if (filterActive.value === "Expelled") {
+        document.querySelector(".preferenceBtnFeatures").classList.add("hide");
+      }
       //theming the detailstList
       if (studentListed.house === "Gryffindor") {
         detailsList.style.backgroundColor = "var(--gryfRed)";
@@ -459,7 +463,7 @@ function displayStudentList(list) {
       } else if (studentListed.isPure) {
         bloodIcon.src = `picture_materials/pureBlood_icon.svg`;
       } else {
-        bloodIcon.src = `picture_materials/muggle_icon.svg`;
+        bloodIcon.src = `picture_materials/Muggle_icon.svg`;
       }
       //TOGGLE PREFECTS make activity diagram
       detailsList.querySelector(".isPrefect").textContent = "Prefect: ";
@@ -504,7 +508,7 @@ function displayStudentList(list) {
       if (studentListed.isSquadMember) {
         document.querySelector(
           ".squadIcon"
-        ).src = `picture_materials/Squad_icon.svg`;
+        ).src = `/picture_materials/Squad_icon.svg`;
         document.querySelector(".makeSquad").classList.add("hide");
         document.querySelector(".removeSquad").classList.remove("hide");
         document.querySelector(".removeSquad").style.cursor = "pointer";
@@ -645,10 +649,9 @@ function expelAStudent(studentListed) {
     squadArray.pop(studentListed);
     studentListed.expelled = true;
     document.querySelector(".details").style.filter = "grayscale(100%)"; //make details list grayed out as feedback
-    document.querySelector(".makeSquad").style.cursor = "default"; //make details list grayed out as feedback
-    document.querySelector(".makePrefect").style.cursor = "default"; //make details list grayed out as feedback
+    document.querySelector("#isExpelled").textContent = "Expelled";
     expelledArray.push(studentListed); //moved into expelled list
-
+    document.querySelector(".preferenceBtnFeatures").classList.add("hide"); //make details list grayed out as feedback
     if (studentListed.house === "Gryffindor") {
       gryfPrefectArray.pop(studentListed);
     }
@@ -936,7 +939,7 @@ function clickSquadMember(studentListed) {
     squadArray.unshift(studentListed);
     document.querySelector(
       ".squadIcon"
-    ).src = `picture_materials/Squad_icon.svg`;
+    ).src = `/picture_materials/Squad_icon.svg`;
 
     document.querySelector(".makeSquad").classList.add("hide");
     document.querySelector(".removeSquad").classList.remove("hide");
