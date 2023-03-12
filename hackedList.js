@@ -375,7 +375,7 @@ function displayStudentList(list) {
     } else if (studentListed.isPure) {
       bloodStatusImgDisplay.src = `picture_materials/pureBlood_icon.svg`;
     } else {
-      bloodStatusImgDisplay.src = `picture_materials/Muggle_icon.svg`;
+      bloodStatusImgDisplay.src = `picture_materials/muggle_icon.svg`;
     }
 
     if (filterActive.value === "Prefects") {
@@ -463,7 +463,7 @@ function displayStudentList(list) {
       } else if (studentListed.isPure) {
         bloodIcon.src = `picture_materials/pureBlood_icon.svg`;
       } else {
-        bloodIcon.src = `picture_materials/Muggle_icon.svg`;
+        bloodIcon.src = `picture_materials/muggle_icon.svg`;
       }
       //TOGGLE PREFECTS make activity diagram
       detailsList.querySelector(".isPrefect").textContent = "Prefect: ";
