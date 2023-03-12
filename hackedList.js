@@ -645,6 +645,8 @@ function expelAStudent(studentListed) {
     squadArray.pop(studentListed);
     studentListed.expelled = true;
     document.querySelector(".details").style.filter = "grayscale(100%)"; //make details list grayed out as feedback
+    document.querySelector(".makeSquad").style.cursor = "default"; //make details list grayed out as feedback
+    document.querySelector(".makePrefect").style.cursor = "default"; //make details list grayed out as feedback
     expelledArray.push(studentListed); //moved into expelled list
 
     if (studentListed.house === "Gryffindor") {
